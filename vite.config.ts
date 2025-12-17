@@ -27,6 +27,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         welcome: path.resolve(__dirname, 'welcome.html'),
+        mobile: path.resolve(__dirname, 'mobile.html'),
       },
     },
   },
