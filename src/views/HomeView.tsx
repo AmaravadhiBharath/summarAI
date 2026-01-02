@@ -417,7 +417,7 @@ export const HomeView: React.FC<HomeViewProps> = () => {
             // 2. Scrape Content
             // CRITICAL FIX: Target frameId: 0 to ensure we scrape the main page, not an empty iframe
             const response = await chrome.tabs.sendMessage(tab.id, { action: 'getPageContent', includeImages: analyzeImages }, { frameId: 0 });
-            console.log("Tiger: Scraper Response:", response);
+            // console.log("Tiger: Scraper Response:", response);
 
             if (!response) {
                 throw new Error("Failed to scrape content. Refresh the page and try again.");
@@ -440,7 +440,7 @@ export const HomeView: React.FC<HomeViewProps> = () => {
             let textToAnalyze = processContent(response, { includeAI });
 
             if (!textToAnalyze || textToAnalyze.trim().length === 0) {
-                console.log("Tiger: No content after processing. Falling back to raw text.");
+                // console.log("Tiger: No content after processing. Falling back to raw text.");
                 textToAnalyze = response.rawText || "";
 
                 if (!textToAnalyze) {
@@ -456,7 +456,7 @@ export const HomeView: React.FC<HomeViewProps> = () => {
             }
 
             // 3. Generate Summary
-            console.log("Calling generateSummary with:", { includeAI, format: finalFormat, provider, images: response.images?.length, tone: finalTone });
+            // console.log("Calling generateSummary with:", { includeAI, format: finalFormat, provider, images: response.images?.length, tone: finalTone });
 
             // Create a promise for the minimum animation time (1.0 seconds for speed)
             const animationPromise = new Promise(resolve => setTimeout(resolve, 1000));
@@ -490,7 +490,7 @@ export const HomeView: React.FC<HomeViewProps> = () => {
 
                     if (accessToken) {
                         authToken = accessToken;
-                        console.log("Auth token obtained for user:", user.email);
+                        // console.log("Auth token obtained for user:", user.email);
                     }
                 } catch (e) {
                     console.error("Auth token error:", e);
@@ -511,8 +511,8 @@ export const HomeView: React.FC<HomeViewProps> = () => {
                 animationPromise
             ]);
 
-            console.log("✅ Generated summary:", generatedSummary);
-            console.log("📊 Summary length:", generatedSummary?.length || 0);
+            // console.log("✅ Generated summary:", generatedSummary);
+            // console.log("📊 Summary length:", generatedSummary?.length || 0);
 
             if (!generatedSummary || generatedSummary.trim().length === 0) {
                 throw new Error("AI returned an empty summary. Please try again.");
@@ -861,185 +861,189 @@ export const HomeView: React.FC<HomeViewProps> = () => {
                                                                 </button>
                                                             </Tooltip>
                                                         </div>
-                                                        <div className="relative mt-2">
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    setShowDebugToastDropdown(!showDebugToastDropdown);
-                                                                }}
-                                                                className="w-full py-1 text-[10px] font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 flex items-center justify-center gap-1"
-                                                            >
-                                                                Test Toasts
-                                                                <ChevronDown className="w-3 h-3" />
-                                                            </button>
-                                                            {showDebugToastDropdown && (
-                                                                <div className="mt-1 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col p-1 gap-1">
-                                                                    <div className="flex flex-col gap-1">
-                                                                        <div
-                                                                            className="flex items-center justify-between text-[9px] font-semibold text-gray-400 px-1 uppercase tracking-wider cursor-pointer hover:text-gray-600"
-                                                                            onClick={(e) => {
-                                                                                e.stopPropagation();
-                                                                                setShowSuccessTypes(!showSuccessTypes);
-                                                                            }}
-                                                                        >
-                                                                            <span>Success Types</span>
-                                                                            <ChevronDown className={cn("w-3 h-3 transition-transform", !showSuccessTypes && "-rotate-90")} />
-                                                                        </div>
-
-                                                                        {showSuccessTypes && (
-                                                                            <>
-                                                                                <button
-                                                                                    onClick={(e) => {
-                                                                                        e.stopPropagation();
-                                                                                        toast.success('Successfully signed in!');
-                                                                                    }}
-                                                                                    className="py-1 text-[10px] font-medium text-green-600 bg-green-50 border border-green-200 rounded hover:bg-green-100 text-left px-2"
-                                                                                >
-                                                                                    Login Success
-                                                                                </button>
-                                                                                <button
-                                                                                    onClick={(e) => {
-                                                                                        e.stopPropagation();
-                                                                                        toast.success('Successfully signed out.');
-                                                                                    }}
-                                                                                    className="py-1 text-[10px] font-medium text-green-600 bg-green-50 border border-green-200 rounded hover:bg-green-100 text-left px-2"
-                                                                                >
-                                                                                    Logout Success
-                                                                                </button>
-                                                                                <button
-                                                                                    onClick={(e) => {
-                                                                                        e.stopPropagation();
-                                                                                        toast.success('Format changed to JSON');
-                                                                                    }}
-                                                                                    className="py-1 text-[10px] font-medium text-green-600 bg-green-50 border border-green-200 rounded hover:bg-green-100 text-left px-2"
-                                                                                >
-                                                                                    Format Change
-                                                                                </button>
-                                                                                <button
-                                                                                    onClick={(e) => {
-                                                                                        e.stopPropagation();
-                                                                                        toast.success('History cleared successfully.');
-                                                                                    }}
-                                                                                    className="py-1 text-[10px] font-medium text-green-600 bg-green-50 border border-green-200 rounded hover:bg-green-100 text-left px-2"
-                                                                                >
-                                                                                    History Cleared
-                                                                                </button>
-                                                                            </>
-                                                                        )}
-                                                                    </div>
-                                                                    <div className="h-px bg-gray-100 my-1" />
-                                                                    <div className="flex flex-col gap-1">
-                                                                        <div
-                                                                            className="flex items-center justify-between text-[9px] font-semibold text-gray-400 px-1 uppercase tracking-wider cursor-pointer hover:text-gray-600"
-                                                                            onClick={(e) => {
-                                                                                e.stopPropagation();
-                                                                                setShowErrorTypes(!showErrorTypes);
-                                                                            }}
-                                                                        >
-                                                                            <span>Error Types</span>
-                                                                            <ChevronDown className={cn("w-3 h-3 transition-transform", !showErrorTypes && "-rotate-90")} />
-                                                                        </div>
-
-                                                                        {showErrorTypes && (
-                                                                            <>
-                                                                                <button
-                                                                                    onClick={(e) => {
-                                                                                        e.stopPropagation();
-                                                                                        toast.error('Login failed. Please try again.');
-                                                                                    }}
-                                                                                    className="py-1 text-[10px] font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 text-left px-2"
-                                                                                >
-                                                                                    Auth Failed
-                                                                                </button>
-                                                                                <button
-                                                                                    onClick={(e) => {
-                                                                                        e.stopPropagation();
-                                                                                        toast.error("You've used your 3 free summaries today! Sign in with Google to get 14 daily summaries.", { duration: 5000 });
-                                                                                    }}
-                                                                                    className="py-1 text-[10px] font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 text-left px-2"
-                                                                                >
-                                                                                    Quota Exceeded
-                                                                                </button>
-                                                                                <button
-                                                                                    onClick={(e) => {
-                                                                                        e.stopPropagation();
-                                                                                        toast.error('No user prompts found');
-                                                                                    }}
-                                                                                    className="py-1 text-[10px] font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 text-left px-2"
-                                                                                >
-                                                                                    No Content
-                                                                                </button>
-                                                                                <button
-                                                                                    onClick={(e) => {
-                                                                                        e.stopPropagation();
-                                                                                        toast.error('Tab closed or inaccessible. Please reload the page.');
-                                                                                    }}
-                                                                                    className="py-1 text-[10px] font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 text-left px-2"
-                                                                                >
-                                                                                    Connection Error
-                                                                                </button>
-                                                                                <button
-                                                                                    onClick={(e) => {
-                                                                                        e.stopPropagation();
-                                                                                        toast.error('Error! Something went wrong.');
-                                                                                    }}
-                                                                                    className="py-1 text-[10px] font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 text-left px-2"
-                                                                                >
-                                                                                    Generic Error
-                                                                                </button>
-                                                                            </>
-                                                                        )}
-                                                                    </div>
-                                                                    <div className="h-px bg-gray-100 my-1" />
+                                                        {import.meta.env.DEV && (
+                                                            <>
+                                                                <div className="relative mt-2">
                                                                     <button
                                                                         onClick={(e) => {
                                                                             e.stopPropagation();
-                                                                            const id = toast.loading('Loading data...');
-                                                                            setTimeout(() => toast.dismiss(id), 2000);
+                                                                            setShowDebugToastDropdown(!showDebugToastDropdown);
                                                                         }}
-                                                                        className="py-1 text-[10px] font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100"
+                                                                        className="w-full py-1 text-[10px] font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded hover:bg-gray-100 flex items-center justify-center gap-1"
                                                                     >
-                                                                        Loading
+                                                                        Test Toasts
+                                                                        <ChevronDown className="w-3 h-3" />
                                                                     </button>
-                                                                    <button
-                                                                        onClick={(e) => {
-                                                                            e.stopPropagation();
-                                                                            toast('Custom Icon Toast', { icon: '🚀' });
-                                                                        }}
-                                                                        className="py-1 text-[10px] font-medium text-purple-600 bg-purple-50 border border-purple-200 rounded hover:bg-purple-100"
-                                                                    >
-                                                                        Custom
-                                                                    </button>
+                                                                    {showDebugToastDropdown && (
+                                                                        <div className="mt-1 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col p-1 gap-1">
+                                                                            <div className="flex flex-col gap-1">
+                                                                                <div
+                                                                                    className="flex items-center justify-between text-[9px] font-semibold text-gray-400 px-1 uppercase tracking-wider cursor-pointer hover:text-gray-600"
+                                                                                    onClick={(e) => {
+                                                                                        e.stopPropagation();
+                                                                                        setShowSuccessTypes(!showSuccessTypes);
+                                                                                    }}
+                                                                                >
+                                                                                    <span>Success Types</span>
+                                                                                    <ChevronDown className={cn("w-3 h-3 transition-transform", !showSuccessTypes && "-rotate-90")} />
+                                                                                </div>
+
+                                                                                {showSuccessTypes && (
+                                                                                    <>
+                                                                                        <button
+                                                                                            onClick={(e) => {
+                                                                                                e.stopPropagation();
+                                                                                                toast.success('Successfully signed in!');
+                                                                                            }}
+                                                                                            className="py-1 text-[10px] font-medium text-green-600 bg-green-50 border border-green-200 rounded hover:bg-green-100 text-left px-2"
+                                                                                        >
+                                                                                            Login Success
+                                                                                        </button>
+                                                                                        <button
+                                                                                            onClick={(e) => {
+                                                                                                e.stopPropagation();
+                                                                                                toast.success('Successfully signed out.');
+                                                                                            }}
+                                                                                            className="py-1 text-[10px] font-medium text-green-600 bg-green-50 border border-green-200 rounded hover:bg-green-100 text-left px-2"
+                                                                                        >
+                                                                                            Logout Success
+                                                                                        </button>
+                                                                                        <button
+                                                                                            onClick={(e) => {
+                                                                                                e.stopPropagation();
+                                                                                                toast.success('Format changed to JSON');
+                                                                                            }}
+                                                                                            className="py-1 text-[10px] font-medium text-green-600 bg-green-50 border border-green-200 rounded hover:bg-green-100 text-left px-2"
+                                                                                        >
+                                                                                            Format Change
+                                                                                        </button>
+                                                                                        <button
+                                                                                            onClick={(e) => {
+                                                                                                e.stopPropagation();
+                                                                                                toast.success('History cleared successfully.');
+                                                                                            }}
+                                                                                            className="py-1 text-[10px] font-medium text-green-600 bg-green-50 border border-green-200 rounded hover:bg-green-100 text-left px-2"
+                                                                                        >
+                                                                                            History Cleared
+                                                                                        </button>
+                                                                                    </>
+                                                                                )}
+                                                                            </div>
+                                                                            <div className="h-px bg-gray-100 my-1" />
+                                                                            <div className="flex flex-col gap-1">
+                                                                                <div
+                                                                                    className="flex items-center justify-between text-[9px] font-semibold text-gray-400 px-1 uppercase tracking-wider cursor-pointer hover:text-gray-600"
+                                                                                    onClick={(e) => {
+                                                                                        e.stopPropagation();
+                                                                                        setShowErrorTypes(!showErrorTypes);
+                                                                                    }}
+                                                                                >
+                                                                                    <span>Error Types</span>
+                                                                                    <ChevronDown className={cn("w-3 h-3 transition-transform", !showErrorTypes && "-rotate-90")} />
+                                                                                </div>
+
+                                                                                {showErrorTypes && (
+                                                                                    <>
+                                                                                        <button
+                                                                                            onClick={(e) => {
+                                                                                                e.stopPropagation();
+                                                                                                toast.error('Login failed. Please try again.');
+                                                                                            }}
+                                                                                            className="py-1 text-[10px] font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 text-left px-2"
+                                                                                        >
+                                                                                            Auth Failed
+                                                                                        </button>
+                                                                                        <button
+                                                                                            onClick={(e) => {
+                                                                                                e.stopPropagation();
+                                                                                                toast.error(<div>You've used your 5 free summaries!<br />Sign in for 10 more.</div>, { duration: 5000 });
+                                                                                            }}
+                                                                                            className="py-1 text-[10px] font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 text-left px-2"
+                                                                                        >
+                                                                                            Quota Exceeded
+                                                                                        </button>
+                                                                                        <button
+                                                                                            onClick={(e) => {
+                                                                                                e.stopPropagation();
+                                                                                                toast.error('No user prompts found');
+                                                                                            }}
+                                                                                            className="py-1 text-[10px] font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 text-left px-2"
+                                                                                        >
+                                                                                            No Content
+                                                                                        </button>
+                                                                                        <button
+                                                                                            onClick={(e) => {
+                                                                                                e.stopPropagation();
+                                                                                                toast.error('Tab closed or inaccessible. Please reload the page.');
+                                                                                            }}
+                                                                                            className="py-1 text-[10px] font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 text-left px-2"
+                                                                                        >
+                                                                                            Connection Error
+                                                                                        </button>
+                                                                                        <button
+                                                                                            onClick={(e) => {
+                                                                                                e.stopPropagation();
+                                                                                                toast.error('Error! Something went wrong.');
+                                                                                            }}
+                                                                                            className="py-1 text-[10px] font-medium text-red-600 bg-red-50 border border-red-200 rounded hover:bg-red-100 text-left px-2"
+                                                                                        >
+                                                                                            Generic Error
+                                                                                        </button>
+                                                                                    </>
+                                                                                )}
+                                                                            </div>
+                                                                            <div className="h-px bg-gray-100 my-1" />
+                                                                            <button
+                                                                                onClick={(e) => {
+                                                                                    e.stopPropagation();
+                                                                                    const id = toast.loading('Loading data...');
+                                                                                    setTimeout(() => toast.dismiss(id), 2000);
+                                                                                }}
+                                                                                className="py-1 text-[10px] font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100"
+                                                                            >
+                                                                                Loading
+                                                                            </button>
+                                                                            <button
+                                                                                onClick={(e) => {
+                                                                                    e.stopPropagation();
+                                                                                    toast('Custom Icon Toast', { icon: '🚀' });
+                                                                                }}
+                                                                                className="py-1 text-[10px] font-medium text-purple-600 bg-purple-50 border border-purple-200 rounded hover:bg-purple-100"
+                                                                            >
+                                                                                Custom
+                                                                            </button>
+                                                                        </div>
+                                                                    )}
                                                                 </div>
-                                                            )}
-                                                        </div>
 
-                                                        {/* Simulate Popups */}
-                                                        <div className="mt-2 pt-2 border-t border-gray-100">
-                                                            <p className="text-[9px] font-semibold text-gray-400 uppercase tracking-wider mb-2">Simulate Popups</p>
-                                                            <div className="grid grid-cols-2 gap-1">
-                                                                <button
-                                                                    onClick={(e) => {
-                                                                        e.stopPropagation();
-                                                                        setShowLoginModal(true);
-                                                                        toast.error(<div>Guest Quota Exceeded (5/5).<br />Sign in for 10 more!</div>, { duration: 3000 });
-                                                                    }}
-                                                                    className="py-1.5 text-[10px] font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100"
-                                                                >
-                                                                    Guest → Free
-                                                                </button>
-                                                                <button
-                                                                    onClick={(e) => {
-                                                                        e.stopPropagation();
-                                                                        setShowUpgradeModal(true);
-                                                                        toast.error("Daily Quota Exceeded (10/10). Upgrade to Pro!", { duration: 3000 });
-                                                                    }}
-                                                                    className="py-1.5 text-[10px] font-medium text-purple-600 bg-purple-50 border border-purple-200 rounded hover:bg-purple-100"
-                                                                >
-                                                                    Free → Pro
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                                                {/* Simulate Popups */}
+                                                                <div className="mt-2 pt-2 border-t border-gray-100">
+                                                                    <p className="text-[9px] font-semibold text-gray-400 uppercase tracking-wider mb-2">Simulate Popups</p>
+                                                                    <div className="grid grid-cols-2 gap-1">
+                                                                        <button
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                setShowLoginModal(true);
+                                                                                toast.error(<div>Guest Quota Exceeded (5/5).<br />Sign in for 10 more!</div>, { duration: 3000 });
+                                                                            }}
+                                                                            className="py-1.5 text-[10px] font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded hover:bg-blue-100"
+                                                                        >
+                                                                            Guest → Free
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={(e) => {
+                                                                                e.stopPropagation();
+                                                                                setShowUpgradeModal(true);
+                                                                                toast.error("Daily Quota Exceeded (10/10). Upgrade to Pro!", { duration: 3000 });
+                                                                            }}
+                                                                            className="py-1.5 text-[10px] font-medium text-purple-600 bg-purple-50 border border-purple-200 rounded hover:bg-purple-100"
+                                                                        >
+                                                                            Free → Pro
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </>
+                                                        )}
                                                     </div>
                                                 )}
                                             </>
