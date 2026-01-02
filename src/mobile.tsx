@@ -96,7 +96,7 @@ const MobileApp = () => {
         return (
             <div className="h-screen flex flex-col items-center justify-center p-8 bg-white text-center space-y-6">
                 <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
-                    <img src="/src/assets/logo.png" alt="Logo" className="w-10 h-10 opacity-80" />
+                    <img src="/src/assets/logo.png" alt="Logo" className="w-10 h-10 opacity-80 dark:invert" />
                 </div>
                 <h1 className="text-2xl font-bold text-gray-900">Summarai Mobile</h1>
                 <p className="text-gray-500">Access your extension history on the go.</p>

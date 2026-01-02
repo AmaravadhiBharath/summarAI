@@ -53,7 +53,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLogin
                         <img
                             src={chrome.runtime.getURL("assets/logo.png")}
                             alt="SummarAI"
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-contain dark:invert"
                             onError={(e) => {
                                 (e.target as HTMLImageElement).src = "/src/assets/logo.png";
                             }}

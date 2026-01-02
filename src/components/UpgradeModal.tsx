@@ -75,7 +75,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({ isOpen, onClose, use
                         <img
                             src={chrome.runtime.getURL("assets/logo.png")}
                             alt="SummarAI"
-                            className="w-full h-full object-contain relative z-10"
+                            className="w-full h-full object-contain relative z-10 dark:invert"
                             onError={(e) => {
                                 (e.target as HTMLImageElement).src = "/src/assets/logo.png";
                             }}
