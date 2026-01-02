@@ -160,7 +160,7 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({
     return (
         <div
             className={cn(
-                "relative w-full font-medium text-sm transition-all duration-300 ease-in-out bg-white text-gray-900 border border-gray-200",
+                "relative w-full font-medium text-sm transition-all duration-300 ease-in-out bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800",
                 state === 'idle' ? "rounded-2xl" : "rounded-xl",
                 // Adjust height based on state and expansion
                 state === 'idle' ? "" :
@@ -172,13 +172,13 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({
                 <div className="flex flex-col p-5 gap-6 animate-fade-in">
                     {/* Top: Format Toggles and Toggle Switch */}
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 bg-gray-100 p-1 rounded-lg w-fit">
+                        <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg w-fit">
                             <Tooltip content="Alignment">
                                 <button
                                     onClick={() => setFormat('paragraph')}
                                     className={cn(
                                         "p-1.5 rounded-md transition-all",
-                                        format === 'paragraph' ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-gray-600"
+                                        format === 'paragraph' ? "bg-white dark:bg-gray-700 text-black dark:text-white shadow-sm" : "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
                                     )}
                                 >
                                     <AlignLeft className="w-4 h-4" />
@@ -189,7 +189,7 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({
                                     onClick={() => setFormat('points')}
                                     className={cn(
                                         "p-1.5 rounded-md transition-all",
-                                        format === 'points' ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-gray-600"
+                                        format === 'points' ? "bg-white dark:bg-gray-700 text-black dark:text-white shadow-sm" : "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
                                     )}
                                 >
                                     <List className="w-4 h-4" />
@@ -210,10 +210,10 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({
                             onChange={handleInput}
                             rows={1}
                             spellCheck={true}
-                            className="w-full border-none p-0 pr-2 text-base font-medium placeholder:text-gray-300 focus:ring-0 focus:outline-none text-gray-900 bg-transparent resize-none min-h-[24px] max-h-[120px] overflow-y-auto"
+                            className="w-full border-none p-0 pr-2 text-base font-medium placeholder:text-gray-300 dark:placeholder:text-gray-600 focus:ring-0 focus:outline-none text-gray-900 dark:text-white bg-transparent resize-none min-h-[24px] max-h-[120px] overflow-y-auto"
                         />
 
-                        <div className="w-full h-px bg-gray-100 mt-3" />
+                        <div className="w-full h-px bg-gray-100 dark:bg-gray-800 mt-3" />
                     </div>
 
                     {/* Bottom: Tone & Action */}
@@ -223,7 +223,7 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({
                                 onClick={() => setTone(prev => prev === 'professional' ? 'normal' : 'professional')}
                                 className={cn(
                                     "px-3 py-1.5 rounded-full text-xs font-medium transition-colors",
-                                    tone === 'professional' ? "bg-black text-white shadow-md" : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                                    tone === 'professional' ? "bg-black dark:bg-white text-white dark:text-black shadow-md" : "bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                                 )}
                             >
                                 professional
@@ -232,7 +232,7 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({
                                 onClick={() => setTone(prev => prev === 'creative' ? 'normal' : 'creative')}
                                 className={cn(
                                     "px-3 py-1.5 rounded-full text-xs font-medium transition-colors",
-                                    tone === 'creative' ? "bg-black text-white shadow-md" : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                                    tone === 'creative' ? "bg-black dark:bg-white text-white dark:text-black shadow-md" : "bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                                 )}
                             >
                                 creative
@@ -242,9 +242,9 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({
                         <Tooltip content="Generate Summary" side="left">
                             <button
                                 onClick={() => onGenerate(additionalInfo, format, tone)}
-                                className="w-10 h-10 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-colors group shadow-md"
+                                className="w-10 h-10 rounded-full bg-black dark:bg-white flex items-center justify-center hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors group shadow-md"
                             >
-                                <ArrowRight className="w-5 h-5 text-white" />
+                                <ArrowRight className="w-5 h-5 text-white dark:text-black" />
                             </button>
                         </Tooltip>
                     </div>
@@ -257,18 +257,18 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({
                     {steps.map((step, index) => (
                         <div key={index} className="flex items-center gap-3">
                             {index < currentStep ? (
-                                <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
-                                    <Check className="w-3 h-3 text-green-600" />
+                                <div className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                    <Check className="w-3 h-3 text-green-600 dark:text-green-400" />
                                 </div>
                             ) : index === currentStep ? (
-                                <Loader2 className="w-5 h-5 text-black animate-spin" />
+                                <Loader2 className="w-5 h-5 text-black dark:text-white animate-spin" />
                             ) : (
-                                <div className="w-5 h-5 rounded-full border border-gray-200" />
+                                <div className="w-5 h-5 rounded-full border border-gray-200 dark:border-gray-700" />
                             )}
 
                             <span className={cn(
                                 "text-sm transition-colors",
-                                index <= currentStep ? "text-gray-900 font-medium" : "text-gray-400"
+                                index <= currentStep ? "text-gray-900 dark:text-white font-medium" : "text-gray-400 dark:text-gray-500"
                             )}>
                                 {step}
                             </span>
@@ -290,10 +290,10 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({
                             onClick={() => setIsExpanded(true)}
                             className="w-full h-12 flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors rounded-xl"
                         >
-                            <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
-                                <ArrowRight className="w-3 h-3 text-green-600 -rotate-90" /> {/* Up Arrow */}
+                            <div className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                <ArrowRight className="w-3 h-3 text-green-600 dark:text-green-400 -rotate-90" /> {/* Up Arrow */}
                             </div>
-                            <span className="font-medium text-gray-900">Summary Generated</span>
+                            <span className="font-medium text-gray-900 dark:text-white">Summary Generated</span>
                             <span className="text-[10px] text-gray-400 font-mono ml-1">
                                 {timer.toFixed(1)}s
                             </span>
@@ -305,10 +305,10 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({
                         <div className="flex flex-col justify-center min-h-[160px] p-6 gap-3 relative">
                             {steps.map((step, index) => (
                                 <div key={index} className="flex items-center gap-3">
-                                    <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
-                                        <Check className="w-3 h-3 text-green-600" />
+                                    <div className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                        <Check className="w-3 h-3 text-green-600 dark:text-green-400" />
                                     </div>
-                                    <span className="text-sm text-gray-900 font-medium">
+                                    <span className="text-sm text-gray-900 dark:text-white font-medium">
                                         {step}
                                     </span>
                                 </div>

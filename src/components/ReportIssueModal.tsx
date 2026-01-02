@@ -80,18 +80,18 @@ export const ReportIssueModal: React.FC<ReportIssueModalProps> = ({ open, onClos
             {/* Modal */}
             <div className="fixed inset-0 z-[201] flex items-center justify-center p-4">
                 <div
-                    className="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-slide-up-fade"
+                    className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-md animate-slide-up-fade"
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Header */}
-                    <div className="flex items-center justify-between p-5 border-b border-gray-200">
+                    <div className="flex items-center justify-between p-5 border-b border-gray-200 dark:border-gray-800">
                         <div className="flex items-center gap-2">
                             <AlertCircle className="w-5 h-5 text-orange-500" />
-                            <h3 className="font-semibold text-gray-900">Report Issue</h3>
+                            <h3 className="font-semibold text-gray-900 dark:text-white">Report Issue</h3>
                         </div>
                         <button
                             onClick={onClose}
-                            className="text-gray-400 hover:text-gray-600 transition-colors"
+                            className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                         >
                             <X className="w-5 h-5" />
                         </button>
@@ -101,18 +101,18 @@ export const ReportIssueModal: React.FC<ReportIssueModalProps> = ({ open, onClos
                     <div className="p-5 space-y-4">
                         {showSuccess ? (
                             <div className="flex flex-col items-center justify-center py-8">
-                                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                                    <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
+                                    <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <h3 className="text-lg font-semibold text-gray-900 mb-2">Thank you!</h3>
-                                <p className="text-sm text-gray-600">Your feedback has been submitted.</p>
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Thank you!</h3>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">Your feedback has been submitted.</p>
                             </div>
                         ) : (
                             <>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         What went wrong?
                                     </label>
                                     <textarea
@@ -122,7 +122,7 @@ export const ReportIssueModal: React.FC<ReportIssueModalProps> = ({ open, onClos
                                             setError(''); // Clear error on input
                                         }}
                                         placeholder="Describe the issue (e.g., summary was inaccurate, missed key points, wrong format...)"
-                                        className={`w-full h-32 px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-black focus:border-transparent resize-none ${error ? 'border-red-300' : 'border-gray-300'
+                                        className={`w-full h-32 px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent resize-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${error ? 'border-red-300 dark:border-red-900' : 'border-gray-300 dark:border-gray-700'
                                             }`}
                                         autoFocus
                                     />
@@ -136,22 +136,22 @@ export const ReportIssueModal: React.FC<ReportIssueModalProps> = ({ open, onClos
 
                                 {/* Privacy Checkbox */}
                                 <div
-                                    className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors"
+                                    className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                                     onClick={() => setIncludeData(!includeData)}
                                 >
-                                    <div className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 transition-all ${includeData ? 'bg-black border-black' : 'bg-white border-gray-300'
+                                    <div className={`w-5 h-5 rounded border flex items-center justify-center shrink-0 transition-all ${includeData ? 'bg-black dark:bg-white border-black dark:border-white' : 'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600'
                                         }`}>
                                         {includeData && (
-                                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg className="w-3 h-3 text-white dark:text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                             </svg>
                                         )}
                                     </div>
                                     <div className="flex-1">
-                                        <p className="text-sm font-medium text-gray-900">
+                                        <p className="text-sm font-medium text-gray-900 dark:text-white">
                                             Include conversation data for debugging
                                         </p>
-                                        <p className="text-xs text-gray-500 mt-1">
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                             This will send your input prompts and generated summary to help us improve. Optional.
                                         </p>
                                     </div>
@@ -161,18 +161,19 @@ export const ReportIssueModal: React.FC<ReportIssueModalProps> = ({ open, onClos
                     </div>
 
                     {/* Footer */}
-                    <div className="flex items-center justify-end gap-3 p-5 border-t border-gray-200">
+                    <div className="flex items-center justify-end gap-3 p-5 border-t border-gray-200 dark:border-gray-800">
                         <Button
                             variant="ghost"
                             onClick={onClose}
                             disabled={isSubmitting}
+                            className="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         >
                             Cancel
                         </Button>
                         <Button
                             onClick={handleSubmit}
                             disabled={isSubmitting}
-                            className="bg-black text-white hover:bg-gray-800"
+                            className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                         >
                             {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
                         </Button>

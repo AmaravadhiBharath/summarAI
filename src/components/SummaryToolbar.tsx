@@ -58,7 +58,7 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
 
     return (
         <div className="relative">
-            <div className="flex items-center gap-1 p-1 bg-white rounded-xl border border-gray-100 shadow-lg min-h-[40px]">
+            <div className="flex items-center gap-1 p-1 bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 shadow-lg min-h-[40px]">
 
                 {/* Good Button */}
                 <Tooltip content="Good Response">
@@ -68,7 +68,7 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
                         onClick={handleGood}
                         className={cn(
                             "h-8 w-8 rounded-lg transition-colors shrink-0 focus:outline-none focus:ring-0",
-                            goodActive ? "text-black hover:bg-gray-100" : "text-gray-500 hover:bg-gray-50"
+                            goodActive ? "text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800" : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
                         )}
                     >
                         <ThumbsUp className={cn("w-4 h-4", goodActive && "fill-current")} />
@@ -90,7 +90,7 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
                         onClick={handleBad}
                         className={cn(
                             "h-8 w-8 rounded-lg transition-colors shrink-0 focus:outline-none focus:ring-0",
-                            badActive ? "text-black hover:bg-gray-100" : "text-gray-500 hover:bg-gray-50"
+                            badActive ? "text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800" : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
                         )}
                     >
                         <ThumbsDown className={cn("w-4 h-4", badActive && "fill-current")} />
@@ -99,12 +99,12 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
 
                 {/* Bad Feedback Message */}
                 {feedback === 'bad' && (
-                    <div className="overflow-hidden whitespace-nowrap text-[10px] font-medium text-black px-1 animate-fade-in">
+                    <div className="overflow-hidden whitespace-nowrap text-[10px] font-medium text-black dark:text-white px-1 animate-fade-in">
                         Thanks for feedback
                     </div>
                 )}
 
-                <div className="w-px h-4 bg-gray-200 mx-0.5 shrink-0" />
+                <div className="w-px h-4 bg-gray-200 dark:bg-gray-700 mx-0.5 shrink-0" />
 
                 {/* Consolidate Button - Only if provided */}
 
@@ -116,29 +116,29 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
                         size="icon"
                         onClick={onRegenerate}
                         disabled={isRegenerating}
-                        className="h-8 w-8 hover:bg-gray-50 rounded-lg text-gray-500 shrink-0 focus:outline-none focus:ring-0"
+                        className="h-8 w-8 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg text-gray-500 dark:text-gray-400 shrink-0 focus:outline-none focus:ring-0"
                     >
-                        <RefreshCw className={cn("w-4 h-4", isRegenerating && "animate-spin text-black")} />
+                        <RefreshCw className={cn("w-4 h-4", isRegenerating && "animate-spin text-black dark:text-white")} />
                     </Button>
                 </Tooltip>
 
                 {/* Regenerating Feedback Message */}
                 {isRegenerating && (
-                    <div className="overflow-hidden whitespace-nowrap text-[10px] font-medium text-gray-500 px-1 animate-fade-in">
+                    <div className="overflow-hidden whitespace-nowrap text-[10px] font-medium text-gray-500 dark:text-gray-400 px-1 animate-fade-in">
                         Regenerating...
                     </div>
                 )}
 
                 {/* Copy */}
                 <Tooltip content="Copy">
-                    <Button variant="ghost" size="icon" onClick={handleCopy} className="h-8 w-8 hover:bg-gray-50 rounded-lg text-gray-500 shrink-0 focus:outline-none focus:ring-0">
+                    <Button variant="ghost" size="icon" onClick={handleCopy} className="h-8 w-8 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg text-gray-500 dark:text-gray-400 shrink-0 focus:outline-none focus:ring-0">
                         <Copy className="w-4 h-4" />
                     </Button>
                 </Tooltip>
 
                 {/* Copy Feedback Message */}
                 {feedback === 'copied' && (
-                    <div className="overflow-hidden whitespace-nowrap text-[10px] font-medium text-gray-700 flex items-center gap-1 px-1 animate-fade-in">
+                    <div className="overflow-hidden whitespace-nowrap text-[10px] font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1 px-1 animate-fade-in">
                         <Check className="w-3 h-3" />
                         Copied
                     </div>
@@ -159,7 +159,7 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
                             <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-8 w-8 hover:bg-gray-50 rounded-lg text-gray-500 shrink-0 focus:outline-none focus:ring-0"
+                                className="h-8 w-8 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg text-gray-500 dark:text-gray-400 shrink-0 focus:outline-none focus:ring-0"
                                 onClick={() => setShowMoreMenu(!showMoreMenu)}
                             >
                                 <MoreVertical className="w-4 h-4" />
@@ -168,10 +168,10 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
                         {showMoreMenu && (
                             <>
                                 <div className="fixed inset-0 z-[90]" onClick={() => setShowMoreMenu(false)} />
-                                <div className="absolute bottom-full right-0 mb-2 z-[100] w-48 bg-white rounded-xl shadow-xl border border-gray-200 py-1 origin-bottom-right overflow-hidden">
+                                <div className="absolute bottom-full right-0 mb-2 z-[100] w-48 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-800 py-1 origin-bottom-right overflow-hidden">
                                     {/* Listen */}
                                     <button
-                                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-3 transition-colors"
                                         onClick={() => {
                                             if ('speechSynthesis' in window) {
                                                 window.speechSynthesis.cancel();
@@ -190,7 +190,7 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
 
                                     {/* PDF */}
                                     <button
-                                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-3 transition-colors"
                                         onClick={() => {
                                             const printWindow = window.open('', '_blank');
                                             if (printWindow) {
@@ -237,7 +237,7 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
 
                                     {/* Download JSON */}
                                     <button
-                                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-3 transition-colors"
                                         onClick={() => {
                                             const blob = new Blob([JSON.stringify({ summary, date: new Date().toISOString() }, null, 2)], { type: 'application/json' });
                                             const url = URL.createObjectURL(blob);
@@ -257,7 +257,7 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
 
                                     {/* Download Markdown */}
                                     <button
-                                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-3 transition-colors"
                                         onClick={() => {
                                             const md = `# Summary\n\n${summary}\n\nGenerated by SummarAI on ${new Date().toLocaleString()}`;
                                             const blob = new Blob([md], { type: 'text/markdown' });
@@ -278,7 +278,7 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
 
                                     {/* Mail */}
                                     <button
-                                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition-colors"
+                                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-3 transition-colors"
                                         onClick={() => {
                                             const subject = encodeURIComponent("Summary from SummarAI");
                                             const body = encodeURIComponent(summary);
@@ -292,11 +292,11 @@ export const SummaryToolbar: React.FC<SummaryToolbarProps> = ({
                                         Mail
                                     </button>
 
-                                    <div className="h-px bg-gray-100 my-1" />
+                                    <div className="h-px bg-gray-100 dark:bg-gray-800 my-1" />
 
                                     {/* Report Issue */}
                                     <button
-                                        className="w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors"
+                                        className="w-full px-4 py-2.5 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-3 transition-colors"
                                         onClick={() => {
                                             onReportIssue();
                                             setShowMoreMenu(false);

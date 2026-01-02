@@ -43,7 +43,7 @@ export const QuotaCounter: React.FC<QuotaCounterProps> = ({ user, isPro }) => {
         <Tooltip content="Summaries remaining today" side="bottom">
             <span className={cn(
                 "px-2 py-0.5 rounded-md text-[10px] font-semibold border shadow-sm transition-colors",
-                remaining === 0 ? "bg-red-50 text-red-600 border-red-100" : "bg-gray-50 text-gray-600 border-gray-200"
+                remaining === 0 ? "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border-red-100 dark:border-red-900" : "bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700"
             )}>
                 {remaining} left
             </span>

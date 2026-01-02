@@ -142,11 +142,11 @@ export const PulseCheck: React.FC<PulseCheckProps> = ({ open, onOpenChange, user
 
     return (
         <div className="popup-content absolute bottom-[32px] left-0 right-0 mb-3 z-[2000]" onClick={(e) => e.stopPropagation()}>
-            <div className="w-full bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+            <div className="w-full bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
                 {/* Header / Close */}
                 <div className="flex justify-between items-center px-4 pt-3 pb-1">
-                    <span className="text-[10px] font-bold text-black uppercase tracking-wider">Pulse Check</span>
-                    <button onClick={handleDismiss} className="text-gray-400 hover:text-gray-600 transition-colors">
+                    <span className="text-[10px] font-bold text-black dark:text-white uppercase tracking-wider">Pulse Check</span>
+                    <button onClick={handleDismiss} className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
                         <X className="w-4 h-4" />
                     </button>
                 </div>
@@ -154,23 +154,23 @@ export const PulseCheck: React.FC<PulseCheckProps> = ({ open, onOpenChange, user
                 <div className="px-5 pb-5 pt-1">
                     {step === 1 && (
                         <div className="space-y-4">
-                            <h3 className="text-sm font-semibold text-gray-900 text-center">What is your initial feeling?</h3>
+                            <h3 className="text-sm font-semibold text-gray-900 dark:text-white text-center">What is your initial feeling?</h3>
                             <div className="grid grid-cols-2 gap-2">
-                                <button onClick={() => handleRating('Game Changer')} className="flex flex-col items-center justify-center gap-1 p-3 rounded-xl border border-gray-100 hover:border-black hover:bg-gray-50 transition-all group">
+                                <button onClick={() => handleRating('Game Changer')} className="flex flex-col items-center justify-center gap-1 p-3 rounded-xl border border-gray-100 dark:border-gray-800 hover:border-black dark:hover:border-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-all group">
                                     <span className="text-xl group-hover:scale-110 transition-transform">🤩</span>
-                                    <span className="text-xs font-medium text-gray-600 group-hover:text-black">Game Changer</span>
+                                    <span className="text-xs font-medium text-gray-600 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white">Game Changer</span>
                                 </button>
-                                <button onClick={() => handleRating('Useful')} className="flex flex-col items-center justify-center gap-1 p-3 rounded-xl border border-gray-100 hover:border-black hover:bg-gray-50 transition-all group">
+                                <button onClick={() => handleRating('Useful')} className="flex flex-col items-center justify-center gap-1 p-3 rounded-xl border border-gray-100 dark:border-gray-800 hover:border-black dark:hover:border-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-all group">
                                     <span className="text-xl group-hover:scale-110 transition-transform">🙂</span>
-                                    <span className="text-xs font-medium text-gray-600 group-hover:text-black">Useful</span>
+                                    <span className="text-xs font-medium text-gray-600 dark:text-gray-300 group-hover:text-black dark:group-hover:text-white">Useful</span>
                                 </button>
-                                <button onClick={() => handleRating('Okay')} className="flex flex-col items-center justify-center gap-1 p-3 rounded-xl border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all group">
+                                <button onClick={() => handleRating('Okay')} className="flex flex-col items-center justify-center gap-1 p-3 rounded-xl border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all group">
                                     <span className="text-xl group-hover:scale-110 transition-transform">😐</span>
-                                    <span className="text-xs font-medium text-gray-600">Okay</span>
+                                    <span className="text-xs font-medium text-gray-600 dark:text-gray-300">Okay</span>
                                 </button>
-                                <button onClick={() => handleRating('Not helpful')} className="flex flex-col items-center justify-center gap-1 p-3 rounded-xl border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all group">
+                                <button onClick={() => handleRating('Not helpful')} className="flex flex-col items-center justify-center gap-1 p-3 rounded-xl border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all group">
                                     <span className="text-xl group-hover:scale-110 transition-transform">🙁</span>
-                                    <span className="text-xs font-medium text-gray-600">Not helpful</span>
+                                    <span className="text-xs font-medium text-gray-600 dark:text-gray-300">Not helpful</span>
                                 </button>
                             </div>
                         </div>
@@ -182,15 +182,15 @@ export const PulseCheck: React.FC<PulseCheckProps> = ({ open, onOpenChange, user
                                 // Happy Path
                                 <div className="space-y-3">
                                     <div className="space-y-2">
-                                        <p className="text-xs font-medium text-gray-700">Should I invest more time into this?</p>
+                                        <p className="text-xs font-medium text-gray-700 dark:text-gray-300">Should I invest more time into this?</p>
                                         <div className="flex gap-2">
                                             <button
                                                 onClick={() => handleAnswerChange('investTime', true)}
-                                                className={cn("flex-1 py-1.5 text-xs rounded-lg border transition-colors", answers.investTime === true ? "bg-black text-white border-black" : "border-gray-200 text-gray-600 hover:bg-gray-50")}
+                                                className={cn("flex-1 py-1.5 text-xs rounded-lg border transition-colors", answers.investTime === true ? "bg-black dark:bg-white text-white dark:text-black border-black dark:border-white" : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800")}
                                             >Yes</button>
                                             <button
                                                 onClick={() => handleAnswerChange('investTime', false)}
-                                                className={cn("flex-1 py-1.5 text-xs rounded-lg border transition-colors", answers.investTime === false ? "bg-gray-800 text-white border-gray-800" : "border-gray-200 text-gray-600 hover:bg-gray-50")}
+                                                className={cn("flex-1 py-1.5 text-xs rounded-lg border transition-colors", answers.investTime === false ? "bg-gray-800 dark:bg-gray-200 text-white dark:text-black border-gray-800 dark:border-gray-200" : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800")}
                                             >No</button>
                                         </div>
                                     </div>
@@ -221,9 +221,9 @@ export const PulseCheck: React.FC<PulseCheckProps> = ({ open, onOpenChange, user
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <p className="text-xs font-medium text-gray-700">Share more thoughts? <span className="text-gray-400 font-normal">(Optional)</span></p>
+                                        <p className="text-xs font-medium text-gray-700 dark:text-gray-300">Share more thoughts? <span className="text-gray-400 dark:text-gray-500 font-normal">(Optional)</span></p>
                                         <textarea
-                                            className="w-full text-xs p-2 rounded-lg border border-gray-200 focus:border-black focus:ring-1 focus:ring-black outline-none resize-none bg-gray-50"
+                                            className="w-full text-xs p-2 rounded-lg border border-gray-200 dark:border-gray-700 focus:border-black dark:focus:border-white focus:ring-1 focus:ring-black dark:focus:ring-white outline-none resize-none bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white"
                                             rows={2}
                                             placeholder="What was your impression?"
                                             onChange={(e) => handleAnswerChange('feedbackText', e.target.value)}
@@ -265,7 +265,7 @@ export const PulseCheck: React.FC<PulseCheckProps> = ({ open, onOpenChange, user
                             <button
                                 onClick={handleSubmit}
                                 disabled={isSubmitting}
-                                className="w-full py-2.5 bg-black hover:bg-gray-800 text-white text-xs font-semibold rounded-xl shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                                className="w-full py-2.5 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-black text-xs font-semibold rounded-xl shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
                             >
                                 {isSubmitting ? (
                                     <>
@@ -284,22 +284,22 @@ export const PulseCheck: React.FC<PulseCheckProps> = ({ open, onOpenChange, user
 
                     {step === 3 && (
                         <div className="py-6 text-center animate-fade-in">
-                            <div className="w-12 h-12 bg-gray-100 text-black rounded-full flex items-center justify-center mx-auto mb-3">
+                            <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 text-black dark:text-white rounded-full flex items-center justify-center mx-auto mb-3">
                                 <ThumbsUp className="w-6 h-6" />
                             </div>
-                            <h3 className="text-sm font-semibold text-gray-900">Thank You!</h3>
-                            <p className="text-xs text-gray-500 mt-1 mb-6">Your feedback helps us build better.</p>
+                            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Thank You!</h3>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-6">Your feedback helps us build better.</p>
 
                             <div className="flex flex-col gap-2">
                                 <button
                                     onClick={handleReset}
-                                    className="w-full py-2.5 bg-black hover:bg-gray-800 text-white text-xs font-semibold rounded-xl shadow-sm transition-all active:scale-95"
+                                    className="w-full py-2.5 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-black text-xs font-semibold rounded-xl shadow-sm transition-all active:scale-95"
                                 >
                                     Submit Another Response
                                 </button>
                                 <button
                                     onClick={handleDismiss}
-                                    className="w-full py-2.5 bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 text-xs font-semibold rounded-xl transition-all active:scale-95"
+                                    className="w-full py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs font-semibold rounded-xl transition-all active:scale-95"
                                 >
                                     Close
                                 </button>

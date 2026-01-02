@@ -59,11 +59,11 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({ isOpen, onClose, use
             />
 
             {/* Modal */}
-            <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden animate-scale-in">
+            <div className="relative w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden animate-scale-in">
                 {/* Close Button */}
                 <button
                     onClick={onClose}
-                    className="absolute top-3 right-3 p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors z-10"
+                    className="absolute top-3 right-3 p-1.5 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors z-10"
                 >
                     <X className="w-4 h-4" />
                 </button>
@@ -80,20 +80,20 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({ isOpen, onClose, use
                                 (e.target as HTMLImageElement).src = "/src/assets/logo.png";
                             }}
                         />
-                        <div className="absolute -bottom-1 -right-1 bg-black text-white text-[10px] font-bold px-1.5 py-0.5 rounded border border-white">
+                        <div className="absolute -bottom-1 -right-1 bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold px-1.5 py-0.5 rounded border border-white dark:border-gray-900">
                             PRO
                         </div>
                     </div>
 
-                    <h2 className="text-xl font-bold text-gray-900 mb-2">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                         Unlock Pro Features
                     </h2>
-                    <p className="text-sm text-gray-500 mb-6">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
                         Experience the full power of SummarAI
                     </p>
 
                     {/* Features */}
-                    <div className="space-y-3 mb-8 text-left bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <div className="space-y-3 mb-8 text-left bg-gray-50 dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700">
                         {[
                             "Everything in Free",
                             "100 daily summaries",
@@ -101,9 +101,9 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({ isOpen, onClose, use
                             "Advanced AI models (GPT-4o)",
                             "Premium email support"
                         ].map((feature, i) => (
-                            <div key={i} className="flex items-center gap-3 text-sm text-gray-700">
-                                <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center shrink-0">
-                                    <Check className="w-3 h-3 text-green-600" />
+                            <div key={i} className="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300">
+                                <div className="w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center shrink-0">
+                                    <Check className="w-3 h-3 text-green-600 dark:text-green-400" />
                                 </div>
                                 <span className="font-medium">{feature}</span>
                             </div>
@@ -114,7 +114,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({ isOpen, onClose, use
                     <button
                         onClick={handleActivate}
                         disabled={isActivating}
-                        className="w-full py-3.5 bg-black text-white rounded-xl hover:bg-gray-800 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-gray-200"
+                        className="w-full py-3.5 bg-black dark:bg-white text-white dark:text-black rounded-xl hover:bg-gray-800 dark:hover:bg-gray-200 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-gray-200 dark:shadow-none"
                     >
                         {isActivating ? (
                             <>
@@ -129,7 +129,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({ isOpen, onClose, use
                         )}
                     </button>
 
-                    <p className="mt-4 text-[11px] text-gray-400">
+                    <p className="mt-4 text-[11px] text-gray-400 dark:text-gray-500">
                         No credit card required during beta period.
                     </p>
                 </div>
