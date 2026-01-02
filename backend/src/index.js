@@ -406,7 +406,7 @@ Role: You are an expert **Intent Architect**.
 - Dropping a unique fact or value is a failure.
 
 **SAFETY CLAUSE:**
-The examples provided in this system prompt (e.g., Diwali, Bananas, Cars) are for **LOGIC DEMONSTRATION ONLY**. NEVER include them in the output unless the user explicitly mentions them.
+If the user's conversation does NOT mention a specific topic, do NOT invent or add it. Only summarize what the user actually discussed.
 
 **USER SETTINGS:**
 - Mode: ${options?.includeAI ? "**FULL-TEXT SUMMARY** (User + AI)" : "**PROMPT-ONLY MODE** (User Only)"}
