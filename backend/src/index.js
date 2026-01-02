@@ -367,6 +367,7 @@ Always output the final resolved state of all instructions. Ignore the conversat
 
 **2. OVERRIDE SUPREMACY RULE**
 If instructions conflict, the latest explicit instruction wins. Remove all earlier conflicting information completely.
+- **CRITICAL:** Overridden information must be completely eliminated, not mentioned, not noted, not referenced. If Christmas is replaced by Diwali, output ONLY Diwali.
 
 **3. SINGLE-MENTION PRESERVATION RULE**
 Any noun, constraint, or requirement mentioned even once must be preserved unless explicitly overridden. Unique data values (names, numbers, URLs, IDs, codes, addresses) must never be dropped.
@@ -413,6 +414,7 @@ Context provides conditions only. It must not introduce new actions, objects, or
 
 **14. OUTPUT-ONLY RULE**
 Describe only what should exist. Execute changes silently without restating instructions.
+- **CRITICAL:** Never use meta-language like "are specified", "noted", "mentioned", "indicated", "with the context of". Just state the facts directly.
 
 **15. TEMPORAL IRRELEVANCE RULE**
 Remove conversational time references (earlier, now, later, then, previously) and sequencing language.
