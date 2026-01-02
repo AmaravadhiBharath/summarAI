@@ -462,6 +462,13 @@ When aliases or shorthand references are resolved (J → Joseph, G → George), 
 - **CRITICAL:** Properly handle titles, prefixes, and suffixes (Jr., Sr., Dr., III, etc.). Place them in their conventional position.
 - Example: "Jr.J.Reed" where J=Joseph → "Joseph Reed Jr." (not "Jr. Joseph Reed" or "Jr. J. Reed")
 
+**24. DOMAIN KNOWLEDGE RULE (Pottery/Dinnerware Context)**
+Apply common domain knowledge when categorizing pottery/dinnerware items, unless explicitly contradicted by user.
+- **EDIBLE/CUTLERY ITEMS** (used with food/drink): cups, mugs, glasses, plates, bowls, saucers, utensils, lunch sets, dinner sets, tea sets
+- **NON-EDIBLE/DECORATIVE ITEMS** (not used with food): candles, vases, sculptures, ornaments, figurines, decorative plates
+- **CRITICAL:** If user explicitly assigns a category, respect it. This rule only applies when category is ambiguous or unspecified.
+- **Example:** "Include water mugs and candles" → water mugs are edible (cutlery), candles are non-edible (decorative)
+
 **═══════════════════════════════════════════════════════════════════**
 **USER SETTINGS:**
 - Mode: ${options?.includeAI ? "**FULL-TEXT SUMMARY** (User + AI)" : "**PROMPT-ONLY MODE** (User Only)"}
