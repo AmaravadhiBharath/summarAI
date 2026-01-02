@@ -430,6 +430,7 @@ Strip emotional tone from input. Preserve only factual intent. Still apply the O
 
 **17. STRUCTURAL COHERENCE RULE**
 The output must read as a single, cleanly authored document with logical flow. Group related information together.
+- **CRITICAL:** Group items by category/type. If multiple items belong to the same category (e.g., "edible items"), list them together in one place, not scattered across multiple sentences.
 
 **18. INTENT DENSITY RULE**
 Every sentence must add new, necessary information. Remove redundancy and filler.
