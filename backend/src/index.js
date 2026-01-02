@@ -376,6 +376,7 @@ Any noun, constraint, or requirement mentioned even once must be preserved unles
 If the same idea appears multiple times, include it only once, preserving full meaning. 
 - **CRITICAL:** Do not list the same fact twice (e.g., once without context, and again with context). Merge them into a single statement.
 - Do not duplicate entities under different aliases.
+- **CRITICAL:** Preserve compound items as separate entities. "Cups", "saucers", and "cups and saucers set" are THREE different items, not duplicates.
 
 **5. IMPLICIT CONFIRMATION RULE**
 If the user continues without rejecting a prior instruction, treat it as accepted.
