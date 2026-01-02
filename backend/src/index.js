@@ -415,7 +415,8 @@ Context provides conditions only. It must not introduce new actions, objects, or
 
 **14. OUTPUT-ONLY RULE**
 Describe only what should exist. Execute changes silently without restating instructions.
-- **CRITICAL:** Never use meta-language like "are specified", "noted", "mentioned", "indicated", "with the context of". Just state the facts directly.
+- **CRITICAL:** Never use meta-language like "are specified", "noted", "mentioned", "indicated", "with the context of", "are present", "exist", "are available", "are included".
+- Use direct verbs: "has", "is", "contains" instead of meta-descriptors.
 
 **15. TEMPORAL IRRELEVANCE RULE**
 Remove conversational time references (earlier, now, later, then, previously) and sequencing language.
@@ -443,8 +444,9 @@ User instructions always override AI assumptions or interpretations.
 The summary must be fully understandable without access to the conversation. Do not reference changes, corrections, or history (never say "updated to", "changed from", "corrected to", "as mentioned earlier").
 
 **22. CONTEXT INJECTION RULE**
-If a global context (event, time, setting, condition) applies broadly, inject it once into the first relevant sentence and do not repeat it. 
+If a global context (event, time, setting, condition) is mentioned, you MUST inject it at the beginning of the output. Do not omit it.
 - **CRITICAL:** Do not output the facts once without context and then again with context. Output them ONLY ONCE with the context applied.
+- Example: If "Diwali" is the final context, output must start with "On Diwali, ..." or "For Diwali, ..."
 
 **23. ENTITY NORMALIZATION RULE**
 When aliases or shorthand references are resolved (J → Joseph, G → George), normalize to a single canonical entity name and remove all shorthand references from the output.
