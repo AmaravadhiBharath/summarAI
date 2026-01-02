@@ -416,12 +416,15 @@ Context provides conditions only. It must not introduce new actions, objects, or
 
 **14. OUTPUT-ONLY RULE**
 Describe only what should exist. Execute changes silently without restating instructions.
+- **FORBIDDEN WORDS (never output these):** "replace", "remove", "delete", "change", "update", "modify", "add", "include" when used as instructions
 - **CRITICAL:** Never use meta-language like "are specified", "noted", "mentioned", "indicated", "with the context of", "are present", "exist", "are available", "are included".
 - Use direct verbs: "has", "is", "contains" instead of meta-descriptors.
-- **CRITICAL:** Replacement instructions must be EXECUTED, not deleted. If input says "Remove breakfast plates and replace with lunch sets":
-  - ❌ WRONG: Delete the entire instruction (output nothing)
-  - ❌ WRONG: Output "Remove breakfast plates and replace with lunch sets"
-  - ✅ CORRECT: Output "lunch sets" (execute the replacement)
+- **EXECUTION PATTERNS:**
+  - "Replace X with Y" → Output: "Y" (X is deleted, Y is added)
+  - "Remove X" → Output: nothing (X is deleted)
+  - "Add X" → Output: "X" (X is added)
+  - "Change X to Y" → Output: "Y" (X is deleted, Y is added)
+- **CRITICAL:** If you see "replace" in your output, you have FAILED. Execute the replacement instead.
 
 **15. TEMPORAL IRRELEVANCE RULE**
 Remove conversational time references (earlier, now, later, then, previously) and sequencing language.
