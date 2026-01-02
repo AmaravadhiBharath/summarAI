@@ -16,6 +16,7 @@ export default defineConfig({
             input: {
                 index: path.resolve(__dirname, 'index.html'),
                 mobile: path.resolve(__dirname, 'mobile.html'),
+                welcome: path.resolve(__dirname, 'welcome-web.html'),
             },
         },
     },

@@ -2,27 +2,40 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Check, AlignLeft, List, ArrowRight, Loader2, ChevronDown } from 'lucide-react';
 import { cn, Tooltip } from './ui/Tooltip';
 
-type GenerateState = 'idle' | 'generating' | 'completed';
+type GenerateState = 'idle' | 'generating' | 'completed' | 'error';
 
 interface GenerateButtonProps {
     onGenerate: (additionalInfo?: string, format?: 'paragraph' | 'points', tone?: 'normal' | 'professional' | 'creative') => void;
     state: GenerateState;
     isRegenerating?: boolean;
+    disabled?: boolean;
+    compact?: boolean;
+    includeAI?: boolean;
+    analyzeImages?: boolean;
+    isGuest?: boolean;
 }
 
 const STEPS_DEFAULT = ["Analyzing prompts", "Extracting insights", "Drafting summary"];
 const STEPS_REGEN = ["Re-analyzing prompts", "Re-extracting insights", "Re-drafting summary"];
 
-export const GenerateButton: React.FC<GenerateButtonProps> = ({ onGenerate, state, isRegenerating = false }) => {
+export const GenerateButton: React.FC<GenerateButtonProps> = ({
+    onGenerate,
+    state,
+    isRegenerating = false,
+    disabled = false,
+    compact = false,
+    isGuest = false
+}) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-    // Determine which steps to show
-    const steps = isRegenerating ? STEPS_REGEN : STEPS_DEFAULT;
 
     // New UI States
     const [format, setFormat] = useState<'paragraph' | 'points'>('paragraph');
     const [tone, setTone] = useState<'normal' | 'professional' | 'creative'>('normal');
     const [additionalInfo, setAdditionalInfo] = useState("");
+
+
+    // Determine which steps to show
+    const steps = isRegenerating ? STEPS_REGEN : STEPS_DEFAULT;
 
 
     // Animation States
@@ -65,7 +78,66 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({ onGenerate, stat
         }
     }, [state, steps.length]); // Add steps.length dependency
 
+    // Compact Mode Rendering (Idle Only)
+    if (compact && state === 'idle') {
+        return (
+            <Tooltip content={disabled ? "Not available on this page" : "Generate Summary"} side="left">
+                <button
+                    onClick={() => !disabled && onGenerate(additionalInfo, format, tone)}
+                    disabled={disabled}
+                    className={cn(
+                        "w-10 h-10 rounded-full flex items-center justify-center transition-colors group shadow-md",
+                        disabled ? "bg-gray-200 cursor-not-allowed" : "bg-black hover:bg-gray-800"
+                    )}
+                >
+                    <ArrowRight className={cn("w-5 h-5", disabled ? "text-gray-400" : "text-white")} />
+                </button>
+            </Tooltip>
+        );
+    }
+
+    // GUEST MODE: Return only floating button without container (all states)
+    if (isGuest) {
+        // If regenerating (e.g. from summary box), do not show floating button
+        if (isRegenerating) return null;
+
+        if (state === 'idle') {
+            return (
+                <Tooltip content={disabled ? "Not available on this page" : "Generate Summary"} side="left">
+                    <button
+                        onClick={() => !disabled && onGenerate(additionalInfo, format, tone)}
+                        disabled={disabled}
+                        className={cn(
+                            "absolute right-4 bottom-4 w-12 h-12 rounded-full flex items-center justify-center transition-colors group shadow-lg z-50",
+                            disabled
+                                ? "bg-gray-200 cursor-not-allowed"
+                                : "bg-black hover:bg-gray-800"
+                        )}
+                    >
+                        <ArrowRight className={cn("w-5 h-5", disabled ? "text-gray-400" : "text-white")} />
+                    </button>
+                </Tooltip >
+            );
+        } else if (state === 'generating') {
+            return (
+                <Tooltip content="Generating..." disabled={true}>
+                    <div className="absolute right-4 bottom-4 w-12 h-12 rounded-full bg-black flex items-center justify-center shadow-lg z-50">
+                        <Loader2 className="w-5 h-5 text-white animate-spin" />
+                    </div>
+                </Tooltip>
+            );
+        } else if (state === 'completed') {
+            return null;
+        }
+        return null;
+    }
+
     const adjustHeight = (el: HTMLTextAreaElement) => {
+        if (!el.value.trim()) {
+            // If empty, reset to minimum height
+            el.style.height = '24px';
+            return;
+        }
         el.style.height = 'auto';
         const newHeight = Math.min(el.scrollHeight, 120); // Max 5 lines (approx 24px * 5)
         el.style.height = `${newHeight}px`;
@@ -98,30 +170,34 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({ onGenerate, stat
         >
             {state === 'idle' && (
                 <div className="flex flex-col p-5 gap-6 animate-fade-in">
-                    {/* Top: Format Toggles */}
-                    <div className="flex items-center gap-2 bg-gray-100 p-1 rounded-lg w-fit">
-                        <Tooltip content="Alignment">
-                            <button
-                                onClick={() => setFormat('paragraph')}
-                                className={cn(
-                                    "p-1.5 rounded-md transition-all",
-                                    format === 'paragraph' ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-gray-600"
-                                )}
-                            >
-                                <AlignLeft className="w-4 h-4" />
-                            </button>
-                        </Tooltip>
-                        <Tooltip content="List">
-                            <button
-                                onClick={() => setFormat('points')}
-                                className={cn(
-                                    "p-1.5 rounded-md transition-all",
-                                    format === 'points' ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-gray-600"
-                                )}
-                            >
-                                <List className="w-4 h-4" />
-                            </button>
-                        </Tooltip>
+                    {/* Top: Format Toggles and Toggle Switch */}
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 bg-gray-100 p-1 rounded-lg w-fit">
+                            <Tooltip content="Alignment">
+                                <button
+                                    onClick={() => setFormat('paragraph')}
+                                    className={cn(
+                                        "p-1.5 rounded-md transition-all",
+                                        format === 'paragraph' ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-gray-600"
+                                    )}
+                                >
+                                    <AlignLeft className="w-4 h-4" />
+                                </button>
+                            </Tooltip>
+                            <Tooltip content="List">
+                                <button
+                                    onClick={() => setFormat('points')}
+                                    className={cn(
+                                        "p-1.5 rounded-md transition-all",
+                                        format === 'points' ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-gray-600"
+                                    )}
+                                >
+                                    <List className="w-4 h-4" />
+                                </button>
+                            </Tooltip>
+                        </div>
+
+
                     </div>
 
 
@@ -147,7 +223,7 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({ onGenerate, stat
                                 onClick={() => setTone(prev => prev === 'professional' ? 'normal' : 'professional')}
                                 className={cn(
                                     "px-3 py-1.5 rounded-full text-xs font-medium transition-colors",
-                                    tone === 'professional' ? "bg-gray-200 text-gray-900" : "bg-gray-50 text-gray-400 hover:bg-gray-100"
+                                    tone === 'professional' ? "bg-black text-white shadow-md" : "bg-gray-50 text-gray-600 hover:bg-gray-100"
                                 )}
                             >
                                 professional
@@ -156,14 +232,14 @@ export const GenerateButton: React.FC<GenerateButtonProps> = ({ onGenerate, stat
                                 onClick={() => setTone(prev => prev === 'creative' ? 'normal' : 'creative')}
                                 className={cn(
                                     "px-3 py-1.5 rounded-full text-xs font-medium transition-colors",
-                                    tone === 'creative' ? "bg-gray-200 text-gray-900" : "bg-gray-50 text-gray-400 hover:bg-gray-100"
+                                    tone === 'creative' ? "bg-black text-white shadow-md" : "bg-gray-50 text-gray-600 hover:bg-gray-100"
                                 )}
                             >
                                 creative
                             </button>
                         </div>
 
-                        <Tooltip content="Generate Summary">
+                        <Tooltip content="Generate Summary" side="left">
                             <button
                                 onClick={() => onGenerate(additionalInfo, format, tone)}
                                 className="w-10 h-10 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-colors group shadow-md"

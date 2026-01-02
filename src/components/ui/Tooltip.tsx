@@ -11,9 +11,10 @@ interface TooltipProps {
     children: React.ReactNode;
     className?: string;
     side?: 'top' | 'bottom' | 'left' | 'right';
+    disabled?: boolean;
 }
 
-export const Tooltip: React.FC<TooltipProps> = ({ content, children, className, side = 'top' }) => {
+export const Tooltip: React.FC<TooltipProps> = ({ content, children, className, side = 'top', disabled = false }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     const positionClasses = {
@@ -33,14 +34,14 @@ export const Tooltip: React.FC<TooltipProps> = ({ content, children, className, 
     return (
         <div
             className={cn("relative inline-block", className)}
-            onMouseEnter={() => setIsVisible(true)}
+            onMouseEnter={() => !disabled && setIsVisible(true)}
             onMouseLeave={() => setIsVisible(false)}
         >
             {children}
-            {isVisible && (
+            {isVisible && !disabled && (
                 <div
                     className={cn(
-                        "absolute z-50 px-2 py-1 text-xs text-white bg-black rounded-md whitespace-nowrap pointer-events-none animate-fade-in",
+                        "absolute z-[9999] px-2 py-1 text-xs text-white bg-black rounded-md whitespace-nowrap pointer-events-none animate-fade-in",
                         positionClasses[side]
                     )}
                 >

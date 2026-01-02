@@ -4,7 +4,6 @@ import { crx } from '@crxjs/vite-plugin'
 import manifest from './src/manifest'
 import path from 'path'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
@@ -23,12 +22,18 @@ export default defineConfig({
     },
   },
   build: {
-    cssCodeSplit: false, // Disable CSS splitting to ensure single file
+    cssCodeSplit: false,
     rollupOptions: {
       input: {
         welcome: path.resolve(__dirname, 'welcome.html'),
         mobile: path.resolve(__dirname, 'mobile.html'),
       },
+      output: {
+
+      }
     },
+  },
+  esbuild: {
+    drop: ['console', 'debugger'],
   },
 })

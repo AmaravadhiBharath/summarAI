@@ -1,7 +1,7 @@
 {
   "name": "summarai",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,16 +12,19 @@
   },
   "dependencies": {
     "@mozilla/readability": "^0.6.0",
+    "@paypal/react-paypal-js": "^8.9.2",
+    "@types/nodemailer": "^7.0.4",
     "clsx": "^2.1.1",
     "firebase": "^12.6.0",
     "framer-motion": "^12.23.26",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.4",
     "lucide-react": "^0.561.0",
+    "nodemailer": "^7.0.11",
     "openai": "^6.13.0",
-    "posthog-js": "^1.306.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-hot-toast": "^2.6.0",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
@@ -42,6 +45,7 @@
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
-    "vite": "^7.2.4"
+    "vite": "^7.2.4",
+    "wrangler": "^4.56.0"
   }
 }

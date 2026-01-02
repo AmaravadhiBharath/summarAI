@@ -4,13 +4,17 @@ import { Layout } from '../components/Layout';
 import { Button } from '../components/ui/Button';
 import { Tooltip } from '../components/ui/Tooltip';
 import { motion } from 'framer-motion';
+import { trackEvent } from '../services/analytics';
 
 interface SummaryViewProps {
     summary: string;
+    rawInput?: string; // The raw text sent to AI
     onBack: () => void;
 }
 
-export const SummaryView: React.FC<SummaryViewProps> = ({ summary, onBack }) => {
+export const SummaryView: React.FC<SummaryViewProps> = ({ summary, rawInput, onBack }) => {
+    const [activeTab, setActiveTab] = React.useState<'summary' | 'raw'>('summary');
+
     return (
         <Layout>
             <div className="flex flex-col h-full relative">
@@ -32,13 +36,38 @@ export const SummaryView: React.FC<SummaryViewProps> = ({ summary, onBack }) => 
                             </Tooltip>
                         </div>
 
+                        {/* Tab Buttons (only show if rawInput exists) */}
+                        {rawInput && (
+                            <div className="absolute top-4 right-4 z-10 flex gap-1 bg-gray-100 p-1 rounded-lg">
+                                <button
+                                    onClick={() => setActiveTab('summary')}
+                                    className={`px-3 py-1 text-xs font-medium rounded transition-colors ${activeTab === 'summary'
+                                            ? 'bg-white text-gray-900 shadow-sm'
+                                            : 'text-gray-600 hover:text-gray-900'
+                                        }`}
+                                >
+                                    Summary
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab('raw')}
+                                    className={`px-3 py-1 text-xs font-medium rounded transition-colors ${activeTab === 'raw'
+                                            ? 'bg-white text-gray-900 shadow-sm'
+                                            : 'text-gray-600 hover:text-gray-900'
+                                        }`}
+                                >
+                                    Raw Input
+                                </button>
+                            </div>
+                        )}
+
                         {/* Content */}
                         <motion.div
+                            key={activeTab}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             className="flex-1 overflow-y-auto text-sm leading-relaxed text-gray-700 text-justify font-sans p-6 pt-16 pb-20"
                         >
-                            {summary}
+                            {activeTab === 'summary' ? summary : (rawInput || 'No raw input available')}
                         </motion.div>
 
                         {/* Bottom Section (inside card overlay) */}
@@ -54,12 +83,22 @@ export const SummaryView: React.FC<SummaryViewProps> = ({ summary, onBack }) => 
                             {/* Floating Toolbar */}
                             <div className="flex items-center gap-1 p-1 bg-white rounded-xl border border-gray-100 shadow-lg">
                                 <Tooltip content="Good Response">
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-gray-50 rounded-lg text-gray-500">
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-8 w-8 hover:bg-gray-50 rounded-lg text-gray-500"
+                                        onClick={() => trackEvent('feedback_positive', { type: 'thumbs_up', length: summary.length })}
+                                    >
                                         <ThumbsUp className="w-4 h-4" />
                                     </Button>
                                 </Tooltip>
                                 <Tooltip content="Bad Response">
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-gray-50 rounded-lg text-gray-500">
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-8 w-8 hover:bg-gray-50 rounded-lg text-gray-500"
+                                        onClick={() => trackEvent('feedback_negative', { type: 'thumbs_down', length: summary.length })}
+                                    >
                                         <ThumbsDown className="w-4 h-4" />
                                     </Button>
                                 </Tooltip>

@@ -1,30 +1,55 @@
-import posthog from 'posthog-js';
-
 const POSTHOG_KEY = 'phc_CnQoAhO7LuIZtFrzKlzsMKL3bVmWtGv4sEUgMFnnM4I';
 const POSTHOG_HOST = 'https://us.i.posthog.com';
 
+let isInitialized = false;
+const ANALYTICS_ENABLED = true;
+let currentUserId: string | null = null;
+
 export const initAnalytics = () => {
-    posthog.init(POSTHOG_KEY, {
-        api_host: POSTHOG_HOST,
-        autocapture: false, // Disable autocapture for extensions to be safe/clean
-        capture_pageview: false, // We'll manually track views
-        persistence: 'localStorage',
-        disable_session_recording: true, // Heavy for extensions
-    });
+    if (!ANALYTICS_ENABLED) return;
+    isInitialized = true;
+    // No initialization needed for fetch-based approach
 };
 
-export const trackEvent = (eventName: string, properties?: Record<string, any>) => {
+export const trackEvent = async (eventName: string, properties?: Record<string, any>) => {
+    if (!ANALYTICS_ENABLED || !isInitialized) return;
+
     try {
-        posthog.capture(eventName, properties);
+        const payload = {
+            api_key: POSTHOG_KEY,
+            event: eventName,
+            properties: {
+                distinct_id: currentUserId || 'anonymous_user',
+                $lib: 'summarai-extension',
+                ...properties
+            },
+            timestamp: new Date().toISOString()
+        };
+
+        await fetch(`${POSTHOG_HOST}/capture/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
     } catch (e) {
-        console.error("Analytics Error:", e);
+        // Silently fail for analytics
+        console.warn("Analytics Error:", e);
     }
 };
 
 export const identifyUser = (userId: string, email?: string) => {
-    posthog.identify(userId, { email });
+    if (!ANALYTICS_ENABLED) return;
+    currentUserId = userId;
+
+    if (email) {
+        trackEvent('$identify', {
+            $set: { email }
+        });
+    }
 };
 
 export const resetAnalytics = () => {
-    posthog.reset();
+    currentUserId = null;
 };

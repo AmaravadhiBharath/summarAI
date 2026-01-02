@@ -13,7 +13,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, header }) => {
                     {header}
                 </header>
             )}
-            <main className="flex-1 flex flex-col p-4 relative overflow-hidden">
+            <main className="flex-1 flex flex-col p-4 relative overflow-hidden min-h-0">
                 {children}
             </main>
         </div>

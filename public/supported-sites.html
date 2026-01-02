@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SummarAI - Supported Platforms</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Background Gradients */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(100, 50, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 50, 150, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(20, 20, 30, 1) 0%, #000000 100%);
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 60px;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-link {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        .nav-cta {
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Main Content */
+        .main-container {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            padding: 0 60px;
+            height: calc(100vh - 88px);
+            /* Minus navbar */
+            position: relative;
+        }
+
+        /* Left Column */
+        .content-left {
+            flex: 1;
+            max-width: 600px;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 64px;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 480px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            border-radius: 100px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Right Column - Orbits */
+        .content-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 100%;
+        }
+
+        .orbit-system {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Central Element */
+        .core {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            box-shadow: 0 0 60px rgba(100, 100, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .core-number {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #ccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .core-label {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* Orbit Rings */
+        .orbit {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .orbit-1 {
+            width: 280px;
+            height: 280px;
+        }
+
+        .orbit-2 {
+            width: 440px;
+            height: 440px;
+        }
+
+        .orbit-3 {
+            width: 600px;
+            height: 600px;
+            border-color: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Orbiting Icons */
+        .planet-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            animation: rotate linear infinite;
+        }
+
+        .planet {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #151515;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .planet:hover {
+            transform: scale(1.2) !important;
+            /* Override inline rotation cancel */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            z-index: 20;
+        }
+
+        .planet-tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .planet:hover .planet-tooltip {
+            opacity: 1;
+        }
+
+        /* Animation Speeds */
+        .pc-1 {
+            animation-duration: 20s;
+        }
+
+        .pc-2 {
+            animation-duration: 35s;
+            animation-direction: reverse;
+        }
+
+        .pc-3 {
+            animation-duration: 50s;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* Cancel rotation on child to keep icon upright */
+        .planet-inner {
+            animation: counter-rotate linear infinite;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pc-1 .planet-inner {
+            animation-duration: 20s;
+        }
+
+        .pc-2 .planet-inner {
+            animation-duration: 35s;
+            animation-direction: reverse;
+        }
+
+        .pc-3 .planet-inner {
+            animation-duration: 50s;
+        }
+
+        @keyframes counter-rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container {
+                flex-direction: column;
+                padding: 40px 24px;
+                height: auto;
+                text-align: center;
+            }
+
+            .content-left {
+                margin-bottom: 60px;
+            }
+
+            h1 {
+                font-size: 48px;
+            }
+
+            .subtitle {
+                margin: 0 auto 40px;
+            }
+
+            .orbit-system {
+                width: 100%;
+                max-width: 400px;
+                height: 400px;
+            }
+
+            .orbit-1 {
+                width: 180px;
+                height: 180px;
+            }
+
+            .orbit-2 {
+                width: 280px;
+                height: 280px;
+            }
+
+            .orbit-3 {
+                width: 380px;
+                height: 380px;
+            }
+
+            .core {
+                width: 100px;
+                height: 100px;
+            }
+
+            .core-number {
+                font-size: 24px;
+            }
+        }
+
+        /* Logos */
+        .logo-grid {
+            position: absolute;
+            bottom: 40px;
+            left: 60px;
+            display: flex;
+            gap: 40px;
+            opacity: 0.5;
+            filter: grayscale(100%);
+        }
+
+        .logo-text {
+            font-weight: 600;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-glow"></div>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="/logo.png" alt="SummarAI" class="logo-img">
+            <span>SummarAI</span>
+        </div>
+        <div class="nav-links">
+            <!-- <a href="#" class="nav-link">Features</a>
+            <a href="#" class="nav-link">Pricing</a> -->
+        </div>
+        <a href="mailto:amaravadhibharath@gmail.com?subject=SummarAI%20Support%20Request" class="nav-cta">Contact
+            Support</a>
+    </nav>
+
+    <div class="main-container">
+        <div class="content-left">
+            <h1>Unlock Insights from Any Platform</h1>
+            <p class="subtitle">
+                SummarAI works seamlessly across 25+ AI platforms, design tools, and coding environments. One click to
+                summarize anything.
+            </p>
+
+            <div class="logo-grid">
+                <span class="logo-text">OpenAI</span>
+                <span class="logo-text">Google</span>
+                <span class="logo-text">Anthropic</span>
+                <span class="logo-text">Figma</span>
+            </div>
+        </div>
+
+        <div class="content-right">
+            <div class="orbit-system">
+                <!-- Core -->
+                <div class="core">
+                    <span class="core-number">25+</span>
+                    <span class="core-label">Platforms</span>
+                </div>
+
+                <!-- Orbit 1 -->
+                <div class="orbit orbit-1"></div>
+                <div class="planet-container pc-1">
+                    <!-- ChatGPT -->
+                    <div class="planet" style="top: 0; left: 50%; transform: translate(-50%, -50%);">
+                        <div class="planet-inner" style="color: #10a37f;">C</div>
+                        <div class="planet-tooltip">ChatGPT</div>
+                    </div>
+                    <!-- Gemini -->
+                    <div class="planet" style="bottom: 0; left: 50%; transform: translate(-50%, 50%);">
+                        <div class="planet-inner" style="color: #4285f4;">G</div>
+                        <div class="planet-tooltip">Gemini</div>
+                    </div>
+                    <!-- Claude -->
+                    <div class="planet" style="top: 50%; left: 0; transform: translate(-50%, -50%);">
+                        <div class="planet-inner" style="color: #d97757;">C</div>
+                        <div class="planet-tooltip">Claude</div>
+                    </div>
+                </div>
+
+                <!-- Orbit 2 -->
+                <div class="orbit orbit-2"></div>
+                <div class="planet-container pc-2">
+                    <!-- Figma -->
+                    <div class="planet" style="top: 15%; left: 85%;">
+                        <div class="planet-inner" style="color: #f24e1e;">F</div>
+                        <div class="planet-tooltip">Figma</div>
+                    </div>
+                    <!-- Meta AI -->
+                    <div class="planet" style="bottom: 15%; left: 15%;">
+                        <div class="planet-inner" style="color: #0064e0;">M</div>
+                        <div class="planet-tooltip">Meta AI</div>
+                    </div>
+                    <!-- Perplexity -->
+                    <div class="planet" style="top: 85%; left: 85%;">
+                        <div class="planet-inner" style="color: #22b8cf;">P</div>
+                        <div class="planet-tooltip">Perplexity</div>
+                    </div>
+                    <!-- Bolt -->
+                    <div class="planet" style="top: 15%; left: 15%;">
+                        <div class="planet-inner" style="color: #f59f00;">B</div>
+                        <div class="planet-tooltip">Bolt</div>
+                    </div>
+                </div>
+
+                <!-- Orbit 3 -->
+                <div class="orbit orbit-3"></div>
+                <div class="planet-container pc-3">
+                    <!-- Visily -->
+                    <div class="planet" style="top: 50%; right: -25px;">
+                        <div class="planet-inner" style="color: #6366f1;">V</div>
+                        <div class="planet-tooltip">Visily</div>
+                    </div>
+                    <!-- Uizard -->
+                    <div class="planet" style="top: -25px; left: 50%;">
+                        <div class="planet-inner" style="color: #ec4899;">U</div>
+                        <div class="planet-tooltip">Uizard</div>
+                    </div>
+                    <!-- Lovable -->
+                    <div class="planet" style="bottom: 20%; right: 10%;">
+                        <div class="planet-inner" style="color: #ef4444;">L</div>
+                        <div class="planet-tooltip">Lovable</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+{
+  "../../../../../@crx/manifest": {
+    "file": "assets/crx-manifest.js-c-oosS4w.js",
+    "name": "crx-manifest.js",
+    "src": "../../../../../@crx/manifest",
+    "isEntry": true
+  },
+  "_index-BW_4U9Iv.js": {
+    "file": "assets/index-BW_4U9Iv.js",
+    "name": "index"
+  },
+  "_useTheme-2Y53t6bE.js": {
+    "file": "assets/useTheme-2Y53t6bE.js",
+    "name": "useTheme",
+    "imports": [
+      "_index-BW_4U9Iv.js"
+    ]
+  },
+  "mobile.html": {
+    "file": "assets/mobile-BslQKlis.js",
+    "name": "mobile",
+    "src": "mobile.html",
+    "isEntry": true,
+    "imports": [
+      "_index-BW_4U9Iv.js"
+    ],
+    "assets": [
+      "assets/logo-CaVNKIyB.png"
+    ]
+  },
+  "sidepanel.html": {
+    "file": "assets/sidepanel.html-Bk0Xbptw.js",
+    "name": "sidepanel.html",
+    "src": "sidepanel.html",
+    "isEntry": true,
+    "imports": [
+      "_index-BW_4U9Iv.js",
+      "_useTheme-2Y53t6bE.js"
+    ]
+  },
+  "src/assets/logo.png": {
+    "file": "assets/logo-CaVNKIyB.png",
+    "src": "src/assets/logo.png"
+  },
+  "src/content.ts": {
+    "file": "assets/content.ts-CxLUGhII.js",
+    "name": "content.ts",
+    "src": "src/content.ts",
+    "isEntry": true
+  },
+  "src/docsContent.ts": {
+    "file": "assets/docsContent.ts-DkC4gX8c.js",
+    "name": "docsContent.ts",
+    "src": "src/docsContent.ts",
+    "isEntry": true
+  },
+  "src/sw.ts": {
+    "file": "assets/sw.ts-CgOSt0r9.js",
+    "name": "sw.ts",
+    "src": "src/sw.ts",
+    "isEntry": true
+  },
+  "style.css": {
+    "file": "assets/style-Cr2y5FA3.css",
+    "src": "style.css"
+  },
+  "welcome.html": {
+    "file": "assets/welcome-B7z-bAsu.js",
+    "name": "welcome",
+    "src": "welcome.html",
+    "isEntry": true,
+    "imports": [
+      "_index-BW_4U9Iv.js",
+      "_useTheme-2Y53t6bE.js"
+    ],
+    "assets": [
+      "assets/logo-CaVNKIyB.png"
+    ]
+  }
+}

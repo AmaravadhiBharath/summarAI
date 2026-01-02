@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import toast from 'react-hot-toast'
 import ReactDOM from 'react-dom/client'
+import { Toaster } from 'react-hot-toast'
 import './index.css'
-import { signInWithGoogleWeb, subscribeToAuthChangesWeb, getHistoryFromFirestoreWeb, logoutWeb } from './services/firebase-web'
-import { type User } from 'firebase/auth'
+import { signInWithGoogle, subscribeToAuthChanges, logout, type ChromeUser } from './services/chrome-auth'
+import { getHistoryFromFirestore } from './services/firebase-extension'
 import { Mail, ArrowLeft, RefreshCw, Calendar } from 'lucide-react'
 
 // --- COMPONENTS ---
@@ -54,17 +56,17 @@ const DetailView = ({ item, onBack }: { item: any, onBack: () => void }) => {
 };
 
 const MobileApp = () => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<ChromeUser | null>(null);
     const [loading, setLoading] = useState(true);
     const [history, setHistory] = useState<any[]>([]);
     const [selectedItem, setSelectedItem] = useState<any | null>(null);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = subscribeToAuthChangesWeb(async (u) => {
+        const unsubscribe = subscribeToAuthChanges(async (u) => {
             setUser(u);
             if (u) {
-                await loadHistory(u.uid);
+                await loadHistory(u.id);
             }
             setLoading(false);
         });
@@ -73,16 +75,16 @@ const MobileApp = () => {
 
     const loadHistory = async (uid: string) => {
         setRefreshing(true);
-        const data = await getHistoryFromFirestoreWeb(uid);
+        const data = await getHistoryFromFirestore(uid);
         setHistory(data || []);
         setRefreshing(false);
     };
 
     const handleLogin = async () => {
         try {
-            await signInWithGoogleWeb();
+            await signInWithGoogle();
         } catch (e) {
-            alert("Login failed");
+            toast.error("Login failed. Please try again.");
         }
     };
 
@@ -117,11 +119,11 @@ const MobileApp = () => {
             <div className="sticky top-0 bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 h-14 flex items-center justify-between z-10">
                 <div className="font-bold text-lg tracking-tight">Inbox</div>
                 <div className="flex items-center gap-3">
-                    <button onClick={() => loadHistory(user.uid)} className={`p-2 hover:bg-gray-100 rounded-full ${refreshing ? 'animate-spin' : ''}`}>
+                    <button onClick={() => loadHistory(user.id)} className={`p-2 hover:bg-gray-100 rounded-full ${refreshing ? 'animate-spin' : ''}`}>
                         <RefreshCw className="w-4 h-4 text-gray-600" />
                     </button>
-                    <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border border-gray-300" onClick={() => { if (confirm('Logout?')) logoutWeb(); }}>
-                        {user.photoURL ? <img src={user.photoURL} className="w-full h-full" /> : <div className="w-full h-full flex items-center justify-center text-xs">{user.displayName?.[0]}</div>}
+                    <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border border-gray-300" onClick={() => { if (confirm('Logout?')) logout(); }}>
+                        {user.picture ? <img src={user.picture} className="w-full h-full" /> : <div className="w-full h-full flex items-center justify-center text-xs">{user.name?.[0]}</div>}
                     </div>
                 </div>
             </div>
@@ -151,5 +153,6 @@ const MobileApp = () => {
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <MobileApp />
+        <Toaster position="bottom-center" />
     </React.StrictMode>,
 )

@@ -1,0 +1,12 @@
+name = "tai-backend"
+compatibility_date = "2023-12-01"
+main = "src/index.js"
+
+[vars]
+# OPENAI_API_KEY = "will_be_set_in_dashboard"
+# GOOGLE_API_KEY = "will_be_set_in_dashboard"
+
+# KV Namespace for Quotas
+[[kv_namespaces]]
+binding = "USER_QUOTA"
+id = "292e90b6c17f4dd6a302059ba5e42adf"

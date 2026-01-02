@@ -35,11 +35,13 @@ export const PulseCheck: React.FC<PulseCheckProps> = ({ open, onOpenChange, user
     }, [open]);
 
     useEffect(() => {
+        // Auto-trigger disabled for admin testing
         // Check if we should show the form
         const checkVisibility = async () => {
             const result = await chrome.storage.local.get(['summarizeCount', 'pulseCheckDismissed', 'pulseCheckDismissedFinal']);
             const count = (result.summarizeCount as number) || 0;
             setSummaryCount(count);
+
             const dismissed = result.pulseCheckDismissed || false;
             const dismissedFinal = result.pulseCheckDismissedFinal || false;
 
@@ -57,6 +59,7 @@ export const PulseCheck: React.FC<PulseCheckProps> = ({ open, onOpenChange, user
             if (changes.summarizeCount) {
                 const newCount = changes.summarizeCount.newValue as number;
                 setSummaryCount(newCount);
+
                 chrome.storage.local.get(['pulseCheckDismissed', 'pulseCheckDismissedFinal'], (res) => {
                     const dismissed = res.pulseCheckDismissed || false;
                     const dismissedFinal = res.pulseCheckDismissedFinal || false;
@@ -138,8 +141,8 @@ export const PulseCheck: React.FC<PulseCheckProps> = ({ open, onOpenChange, user
     const isHappyPath = rating === 'Game Changer' || rating === 'Useful';
 
     return (
-        <div className="absolute bottom-full right-0 mb-2 z-[200] w-[300px]">
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+        <div className="popup-content absolute bottom-[32px] left-0 right-0 mb-3 z-[2000]" onClick={(e) => e.stopPropagation()}>
+            <div className="w-full bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
                 {/* Header / Close */}
                 <div className="flex justify-between items-center px-4 pt-3 pb-1">
                     <span className="text-[10px] font-bold text-black uppercase tracking-wider">Pulse Check</span>
@@ -216,6 +219,15 @@ export const PulseCheck: React.FC<PulseCheckProps> = ({ open, onOpenChange, user
                                                 className={cn("flex-1 py-1.5 text-xs rounded-lg border transition-colors", answers.refer === false ? "bg-gray-800 text-white border-gray-800" : "border-gray-200 text-gray-600 hover:bg-gray-50")}
                                             >No</button>
                                         </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <p className="text-xs font-medium text-gray-700">Share more thoughts? <span className="text-gray-400 font-normal">(Optional)</span></p>
+                                        <textarea
+                                            className="w-full text-xs p-2 rounded-lg border border-gray-200 focus:border-black focus:ring-1 focus:ring-black outline-none resize-none bg-gray-50"
+                                            rows={2}
+                                            placeholder="What was your impression?"
+                                            onChange={(e) => handleAnswerChange('feedbackText', e.target.value)}
+                                        />
                                     </div>
                                 </div>
                             ) : (

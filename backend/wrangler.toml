@@ -2,9 +2,16 @@ name = "tai-backend"
 compatibility_date = "2023-12-01"
 main = "src/index.js"
 
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+
 [vars]
 # OPENAI_API_KEY = "will_be_set_in_dashboard"
 # GOOGLE_API_KEY = "will_be_set_in_dashboard"
+# DODO_PAYMENTS_API_KEY = "will_be_set_in_dashboard"
+# DODO_PAYMENTS_MODE = "test" # or "live"
+SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxB-rqbp8t68BmaQrGJ91vqdtrLcuELt4BIad0zwbV0Y6Lyp4mnfCzpyhpNHhQ3qwRf/exec"
 
 # KV Namespace for Quotas
 [[kv_namespaces]]

@@ -5,15 +5,30 @@
  * FIX: 3 Tones (Normal/Professional/Creative)
  */
 
+import nodemailer from 'nodemailer';
+
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
 };
 
 export default {
     async fetch(request, env) {
         if (request.method === 'OPTIONS') return new Response(null, { headers: CORS_HEADERS });
+
+        const url = new URL(request.url);
+
+        // GET /selectors - Serve dynamic scraping configuration
+        if (request.method === 'GET' && url.pathname === '/selectors') {
+            return handleGetSelectors(env);
+        }
+
+        // POST /send-welcome-email - Send welcome email
+        if (request.method === 'POST' && url.pathname === '/send-welcome-email') {
+            return handleWelcomeEmail(request, env);
+        }
+
         if (request.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers: CORS_HEADERS });
 
         try {
@@ -36,9 +51,14 @@ export default {
                 temperature = 0.5;
             }
 
-            const formatInstruction = options?.format === 'points'
-                ? "FORMAT: BULLETED LIST (STRICT). You MUST output a bulleted list. Even if there is only one item, format it as a single bullet point."
-                : "FORMAT: Single well-structured paragraph (Default).";
+            let formatInstruction = "FORMAT: Single well-structured paragraph (Default).";
+            if (options?.format === 'points') {
+                formatInstruction = "FORMAT: BULLETED LIST (STRICT). You MUST output a bulleted list. Even if there is only one item, format it as a single bullet point.";
+            } else if (options?.format === 'JSON') {
+                formatInstruction = "FORMAT: JSON. Output valid JSON only. Structure the summary data appropriately.";
+            } else if (options?.format === 'XML') {
+                formatInstruction = "FORMAT: XML. Output valid XML only. Structure the summary data appropriately.";
+            }
 
             // Common System Prompt
             const systemPrompt = `
@@ -53,35 +73,47 @@ Input Structure
   - ${formatInstruction}
 
 **CRITICAL RULES:**
-1. **CORE SUMMARIZATION (The Foundation)**:
+1. **CORE CONSOLIDATION (The Foundation)**:
    - **Merge Similar**: Combine related requests.
    - **Cancel Opposites**: "Add X" then "Remove X" = omit.
    - **Net Result**: "Add 3" -> "Remove 1" = "Include 2".
    
    - **PROMPT-ONLY MODE (Include AI = OFF)**:
-     - **GOAL**: Rewrite the user's intent into a single imperative command.
-     - **CONSTRAINT**: **DO NOT ANSWER** the user's question. **DO NOT** provide the solution.
+     - **GOAL**: Extract and consolidate the user's intent. Output ONLY the consolidated prompt/request.
+     - **CONSTRAINT**: Do NOT add meta-commentary like "Summarize the request to..." or "The user wants to...". Just output the actual consolidated content.
      - **EXAMPLE**:
+       - Input: "generate red"
+       - BAD: "Summarize the request to generate something red from a conversation with Gemini."
+       - BAD: "The user wants to generate something red."
+       - GOOD: "Generate something red."
+       
        - Input: "How do I fix this bug?"
-       - BAD: "You can fix it by..." (This is an answer)
-       - GOOD: "Explain how to fix the bug." (This is a summary)
-     - **CONTENT**: ONLY summarize what the USER asked. Ignore AI responses if present.
+       - BAD: "Summarize the request to explain how to fix the bug."
+       - GOOD: "Explain how to fix the bug."
+       
+       - Input: "Make it blue" then "Actually, make it green" then "Add a border"
+       - GOOD: "Make it green and add a border."
+     - **CONTENT**: ONLY consolidate what the USER asked. Ignore AI responses if present.
 
    - **FULL-TEXT MODE (Include AI = ON)**:
-     - Summarize the entire Q&A flow (User asked X, AI answered Y).
+     - Consolidate the entire Q&A flow (User asked X, AI answered Y).
      - Capture the solution provided by the AI.
+     - Output the consolidated conversation, not a description of it.
 
 2. **ADDITIONAL INFO & WEB SEARCH**:
+   - **NOTE**: Respect any [User Context/Note] provided at the start of the content.
    - The user may provide "Additional Info".
    - **IF** the user explicitly asks to "search", "find latest", "lookup", or "check web" -> **USE GOOGLE SEARCH**.
    - **IF** the user asks a specific question ("Explain this code") -> Answer it using the provided content.
    - **IF** the user asks for a "Report" -> Structure as a formal report with headers.
-   - **OTHERWISE** -> Just apply the additional info as a constraint to the summary (e.g., "Focus on X").
+   - **OTHERWISE** -> Just apply the additional info as a constraint to the consolidation (e.g., "Focus on X").
 
 3. **OUTPUT FORMAT**:
-   - Clean plain text (unless "Report" requested).
+   - Clean plain text (unless "Report", JSON, or XML requested).
    - No markdown bolding/italics in standard summaries.
    - **List Mode**: Use bullet points if requested.
+   - **NEVER** start with phrases like "Summarize the request to...", "The user wants to...", "This is about...", etc.
+   - Output the ACTUAL consolidated content directly.
 `;
 
             let finalProvider = provider;
@@ -244,3 +276,106 @@ Input Structure
         }
     }
 };
+
+async function handleWelcomeEmail(request, env) {
+    try {
+        const { email, name } = await request.json();
+
+        if (!email) throw new Error("Email is required");
+
+        // Email Template
+        const subject = "Bharath from SummarAI";
+        const htmlContent = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+                <h2 style="color: #000;">Welcome to SummarAI, ${name || 'User'}!</h2>
+                <p>Thanks for installing SummarAI. We're excited to help you summarize the web.</p>
+                
+                <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #eee;">
+                    <h3 style="margin-top: 0; color: #2563eb;">🛡️ Double-Protection Logic</h3>
+                    <p>We know reliability is key. That's why SummarAI uses a unique <strong>Double-Protection</strong> system:</p>
+                    <ul style="line-height: 1.6;">
+                        <li><strong>Smart Parsing:</strong> We intelligently extract conversation structures from supported sites like ChatGPT and Gemini.</li>
+                        <li><strong>Fallback Safety:</strong> If structure extraction fails, our robust fallback engine captures the raw text, ensuring you never lose content.</li>
+                    </ul>
+                    <p>This ensures you get accurate summaries, every time.</p>
+                </div>
+
+                <p>Happy Summarizing!</p>
+                <p><strong>The SummarAI Team</strong></p>
+            </div>
+        `;
+
+        // Send via Gmail SMTP (Nodemailer)
+        // REQUIRES: node_compat = true in wrangler.toml
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: env.GMAIL_USER || 'amaravadhibharath@gmail.com',
+                pass: env.GMAIL_APP_PASSWORD
+            }
+        });
+
+        await transporter.sendMail({
+            from: `"SummarAI Team" <${env.GMAIL_USER || 'amaravadhibharath@gmail.com'}>`,
+            to: email,
+            subject: subject,
+            html: htmlContent
+        });
+
+        return new Response(JSON.stringify({ success: true }), {
+            headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
+        });
+
+    } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), {
+            status: 500,
+            headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
+        });
+    }
+}
+
+async function handleGetSelectors(env) {
+    try {
+        // Fetch from Firebase Realtime Database
+        const firebaseUrl = 'https://tiger-superextension-09-default-rtdb.firebaseio.com/scraping_config.json';
+
+        const response = await fetch(firebaseUrl);
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch selectors from Firebase');
+        }
+
+        const selectors = await response.json();
+
+        // Return default config if Firebase returns null
+        const config = selectors || {
+            'gemini.google.com': {
+                platform: 'gemini',
+                selectors: ['[data-test-id*="message"]', '[data-message-id]', '.conversation-turn'],
+                roleAttribute: 'data-test-id',
+                userRoleValue: 'user-message'
+            },
+            'chatgpt.com': {
+                platform: 'chatgpt',
+                selectors: ['[data-message-author-role]', '.text-message'],
+                roleAttribute: 'data-message-author-role',
+                userRoleValue: 'user'
+            },
+            'claude.ai': {
+                platform: 'claude',
+                selectors: ['.font-user-message', '.font-claude-message'],
+                userClassName: 'font-user-message'
+            }
+        };
+
+        return new Response(JSON.stringify(config), {
+            headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
+        });
+
+    } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), {
+            status: 500,
+            headers: { ...CORS_HEADERS, 'Content-Type': 'application/json' }
+        });
+    }
+}

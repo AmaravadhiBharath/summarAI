@@ -1,0 +1,136 @@
+{
+  "name": "Summarai",
+  "description": "Surf, learn, vibe faster. AI-powered summaries of your AI conversations.",
+  "version": "1.0.4",
+  "manifest_version": 3,
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "activeTab",
+    "identity",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://tai-backend.amaravadhibharath.workers.dev/*"
+  ],
+  "icons": {
+    "16": "src/assets/logo.png",
+    "48": "src/assets/logo.png",
+    "128": "src/assets/logo.png"
+  },
+  "action": {
+    "default_title": "summarai",
+    "default_icon": "src/assets/logo.png"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/docsContent.ts-_PG1YsLg.js"
+      ],
+      "matches": [
+        "https://docs.google.com/document/*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "assets/content.ts-DjQ7QACT.js"
+      ],
+      "matches": [
+        "https://gemini.google.com/*",
+        "https://chatgpt.com/*",
+        "https://openai.com/*",
+        "https://figma.com/*",
+        "https://visily.ai/*",
+        "https://uizard.io/*",
+        "https://uxmagic.ai/*",
+        "https://banani.co/*",
+        "https://labs.google.com/*",
+        "https://app.emergent.sh/*",
+        "https://rocket.new/*",
+        "https://lovable.dev/*",
+        "https://bolt.new/*",
+        "https://base44.com/*",
+        "https://create.xyz/*",
+        "https://memex.tech/*",
+        "https://buildfire.com/*",
+        "https://glideapps.com/*",
+        "https://flatlogic.com/*",
+        "https://retool.com/*",
+        "https://uibakery.io/*",
+        "https://zoho.com/*",
+        "https://appypie.com/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "src/assets/*"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://docs.google.com/*"
+      ],
+      "resources": [
+        "assets/docsContent.ts-_PG1YsLg.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://app.emergent.sh/*",
+        "https://appypie.com/*",
+        "https://banani.co/*",
+        "https://base44.com/*",
+        "https://bolt.new/*",
+        "https://buildfire.com/*",
+        "https://chatgpt.com/*",
+        "https://create.xyz/*",
+        "https://figma.com/*",
+        "https://flatlogic.com/*",
+        "https://gemini.google.com/*",
+        "https://glideapps.com/*",
+        "https://labs.google.com/*",
+        "https://lovable.dev/*",
+        "https://memex.tech/*",
+        "https://openai.com/*",
+        "https://retool.com/*",
+        "https://rocket.new/*",
+        "https://uibakery.io/*",
+        "https://uizard.io/*",
+        "https://uxmagic.ai/*",
+        "https://visily.ai/*",
+        "https://zoho.com/*"
+      ],
+      "resources": [
+        "assets/content.ts-DjQ7QACT.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ],
+  "oauth2": {
+    "client_id": "523127017746-1tt3t3mqa76l4015lj3sc45gthusm4s5.apps.googleusercontent.com",
+    "scopes": [
+      "profile",
+      "email",
+      "openid"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

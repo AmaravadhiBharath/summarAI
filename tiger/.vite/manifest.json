@@ -1,0 +1,138 @@
+{
+  "../../../../@crx/manifest": {
+    "file": "assets/crx-manifest.js-Dgw8OlhJ.js",
+    "name": "crx-manifest.js",
+    "src": "../../../../@crx/manifest",
+    "isEntry": true
+  },
+  "_Button-u5xpvl0m.js": {
+    "file": "assets/Button-u5xpvl0m.js",
+    "name": "Button",
+    "imports": [
+      "_vendor-CW_Uz-VJ.js"
+    ]
+  },
+  "_chrome-auth-CvNSQ1jf.js": {
+    "file": "assets/chrome-auth-CvNSQ1jf.js",
+    "name": "chrome-auth",
+    "imports": [
+      "_vendor-CW_Uz-VJ.js"
+    ]
+  },
+  "_firebase-extension-D_G_kiIL.js": {
+    "file": "assets/firebase-extension-D_G_kiIL.js",
+    "name": "firebase-extension",
+    "imports": [
+      "_firebase-firestore-Bn4Lp4iP.js"
+    ]
+  },
+  "_firebase-firestore-Bn4Lp4iP.js": {
+    "file": "assets/firebase-firestore-Bn4Lp4iP.js",
+    "name": "firebase-firestore"
+  },
+  "_jspdf-BLwrtHRg.js": {
+    "file": "assets/jspdf-BLwrtHRg.js",
+    "name": "jspdf",
+    "isDynamicEntry": true,
+    "dynamicImports": [
+      "node_modules/html2canvas/dist/html2canvas.esm.js",
+      "node_modules/dompurify/dist/purify.es.mjs",
+      "node_modules/canvg/lib/index.es.js"
+    ]
+  },
+  "_vendor-CW_Uz-VJ.js": {
+    "file": "assets/vendor-CW_Uz-VJ.js",
+    "name": "vendor"
+  },
+  "mobile.html": {
+    "file": "assets/mobile-tXnuNth5.js",
+    "name": "mobile",
+    "src": "mobile.html",
+    "isEntry": true,
+    "imports": [
+      "_chrome-auth-CvNSQ1jf.js",
+      "_vendor-CW_Uz-VJ.js",
+      "_firebase-extension-D_G_kiIL.js",
+      "_firebase-firestore-Bn4Lp4iP.js"
+    ],
+    "assets": [
+      "assets/logo-KdpuiT9U.png"
+    ]
+  },
+  "node_modules/canvg/lib/index.es.js": {
+    "file": "assets/index.es-DxBL_X8y.js",
+    "name": "index.es",
+    "src": "node_modules/canvg/lib/index.es.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-CW_Uz-VJ.js",
+      "_jspdf-BLwrtHRg.js"
+    ]
+  },
+  "node_modules/dompurify/dist/purify.es.mjs": {
+    "file": "assets/purify.es-BjU8njvH.js",
+    "name": "purify.es",
+    "src": "node_modules/dompurify/dist/purify.es.mjs",
+    "isDynamicEntry": true
+  },
+  "node_modules/html2canvas/dist/html2canvas.esm.js": {
+    "file": "assets/html2canvas-C406JFgS.js",
+    "name": "html2canvas",
+    "src": "node_modules/html2canvas/dist/html2canvas.esm.js",
+    "isDynamicEntry": true
+  },
+  "sidepanel.html": {
+    "file": "assets/sidepanel.html-CIfUETHA.js",
+    "name": "sidepanel.html",
+    "src": "sidepanel.html",
+    "isEntry": true,
+    "imports": [
+      "_chrome-auth-CvNSQ1jf.js",
+      "_vendor-CW_Uz-VJ.js",
+      "_jspdf-BLwrtHRg.js",
+      "_Button-u5xpvl0m.js",
+      "_firebase-extension-D_G_kiIL.js",
+      "_firebase-firestore-Bn4Lp4iP.js"
+    ],
+    "dynamicImports": [
+      "_jspdf-BLwrtHRg.js"
+    ]
+  },
+  "src/assets/logo.png": {
+    "file": "assets/logo-KdpuiT9U.png",
+    "src": "src/assets/logo.png"
+  },
+  "src/content.ts": {
+    "file": "assets/content.ts-DjQ7QACT.js",
+    "name": "content.ts",
+    "src": "src/content.ts",
+    "isEntry": true
+  },
+  "src/docsContent.ts": {
+    "file": "assets/docsContent.ts-_PG1YsLg.js",
+    "name": "docsContent.ts",
+    "src": "src/docsContent.ts",
+    "isEntry": true
+  },
+  "src/service-worker.ts": {
+    "file": "assets/service-worker.ts-DFE6c_U6.js",
+    "name": "service-worker.ts",
+    "src": "src/service-worker.ts",
+    "isEntry": true
+  },
+  "style.css": {
+    "file": "assets/style-BqgV4Yy1.css",
+    "src": "style.css"
+  },
+  "welcome.html": {
+    "file": "assets/welcome-vpHYXAkZ.js",
+    "name": "welcome",
+    "src": "welcome.html",
+    "isEntry": true,
+    "imports": [
+      "_chrome-auth-CvNSQ1jf.js",
+      "_vendor-CW_Uz-VJ.js",
+      "_Button-u5xpvl0m.js"
+    ]
+  }
+}

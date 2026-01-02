@@ -1,0 +1,86 @@
+{
+  "../../../../@crx/manifest": {
+    "file": "assets/crx-manifest.js-BRqGP_V7.js",
+    "name": "crx-manifest.js",
+    "src": "../../../../@crx/manifest",
+    "isEntry": true
+  },
+  "_chevron-down-C5WHW-bt.js": {
+    "file": "assets/chevron-down-C5WHW-bt.js",
+    "name": "chevron-down",
+    "imports": [
+      "_createLucideIcon-CfY4lJMg.js"
+    ]
+  },
+  "_createLucideIcon-CfY4lJMg.js": {
+    "file": "assets/createLucideIcon-CfY4lJMg.js",
+    "name": "createLucideIcon"
+  },
+  "_firebase-extension-C89zkgnU.js": {
+    "file": "assets/firebase-extension-C89zkgnU.js",
+    "name": "firebase-extension",
+    "imports": [
+      "_createLucideIcon-CfY4lJMg.js"
+    ]
+  },
+  "mobile.html": {
+    "file": "assets/mobile-BMHlFt_l.js",
+    "name": "mobile",
+    "src": "mobile.html",
+    "isEntry": true,
+    "imports": [
+      "_createLucideIcon-CfY4lJMg.js",
+      "_firebase-extension-C89zkgnU.js"
+    ],
+    "assets": [
+      "assets/logo-KdpuiT9U.png"
+    ]
+  },
+  "sidepanel.html": {
+    "file": "assets/sidepanel.html-Be_IZNB0.js",
+    "name": "sidepanel.html",
+    "src": "sidepanel.html",
+    "isEntry": true,
+    "imports": [
+      "_createLucideIcon-CfY4lJMg.js",
+      "_chevron-down-C5WHW-bt.js",
+      "_firebase-extension-C89zkgnU.js"
+    ]
+  },
+  "src/assets/logo.png": {
+    "file": "assets/logo-KdpuiT9U.png",
+    "src": "src/assets/logo.png"
+  },
+  "src/content.ts": {
+    "file": "assets/content.ts-BAc8gtFT.js",
+    "name": "content.ts",
+    "src": "src/content.ts",
+    "isEntry": true
+  },
+  "src/docsContent.ts": {
+    "file": "assets/docsContent.ts-_PG1YsLg.js",
+    "name": "docsContent.ts",
+    "src": "src/docsContent.ts",
+    "isEntry": true
+  },
+  "src/service-worker.ts": {
+    "file": "assets/service-worker.ts-CSp4x-xu.js",
+    "name": "service-worker.ts",
+    "src": "src/service-worker.ts",
+    "isEntry": true
+  },
+  "style.css": {
+    "file": "assets/style-DT9q3fFh.css",
+    "src": "style.css"
+  },
+  "welcome.html": {
+    "file": "assets/welcome-iToD-gTy.js",
+    "name": "welcome",
+    "src": "welcome.html",
+    "isEntry": true,
+    "imports": [
+      "_createLucideIcon-CfY4lJMg.js",
+      "_chevron-down-C5WHW-bt.js"
+    ]
+  }
+}
