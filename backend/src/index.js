@@ -417,7 +417,10 @@ Context provides conditions only. It must not introduce new actions, objects, or
 Describe only what should exist. Execute changes silently without restating instructions.
 - **CRITICAL:** Never use meta-language like "are specified", "noted", "mentioned", "indicated", "with the context of", "are present", "exist", "are available", "are included".
 - Use direct verbs: "has", "is", "contains" instead of meta-descriptors.
-- **CRITICAL:** Never output replacement instructions. If input says "Remove breakfast plates and replace with lunch sets", output ONLY "lunch sets" (not "Remove breakfast plates and replace with lunch sets").
+- **CRITICAL:** Replacement instructions must be EXECUTED, not deleted. If input says "Remove breakfast plates and replace with lunch sets":
+  - ❌ WRONG: Delete the entire instruction (output nothing)
+  - ❌ WRONG: Output "Remove breakfast plates and replace with lunch sets"
+  - ✅ CORRECT: Output "lunch sets" (execute the replacement)
 
 **15. TEMPORAL IRRELEVANCE RULE**
 Remove conversational time references (earlier, now, later, then, previously) and sequencing language.
