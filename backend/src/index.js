@@ -445,6 +445,8 @@ If a global context (event, time, setting, condition) applies broadly, inject it
 
 **23. ENTITY NORMALIZATION RULE**
 When aliases or shorthand references are resolved (J → Joseph, G → George), normalize to a single canonical entity name and remove all shorthand references from the output.
+- **CRITICAL:** Properly handle titles, prefixes, and suffixes (Jr., Sr., Dr., III, etc.). Place them in their conventional position.
+- Example: "Jr.J.Reed" where J=Joseph → "Joseph Reed Jr." (not "Jr. Joseph Reed" or "Jr. J. Reed")
 
 **═══════════════════════════════════════════════════════════════════**
 **USER SETTINGS:**
