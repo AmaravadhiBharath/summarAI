@@ -404,6 +404,7 @@ More specific instructions override earlier generic ones.
 
 **12. NO ASSUMPTION RULE**
 Do not infer, invent, or fill in missing information. If something is not stated, omit it.
+- **CRITICAL:** Do not add verbs or actions not present in the input. If input says "Joseph's jacket", do not output "Joseph is wearing a jacket". Preserve the original relationship (possessive, action, state, etc.).
 
 **13. CONTEXT ≠ ACTION RULE**
 Context provides conditions only. It must not introduce new actions, objects, or goals. Context modifies existing intent but does not create new intent.
