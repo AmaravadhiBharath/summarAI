@@ -1,8 +1,8 @@
-# Intent Resolution Rules — v31 (Example-Free)
+# Intent Resolution Rules — v32 (Deduplication Fix)
 
-**Version:** v31 - Production-Ready, Example-Free  
+**Version:** v32 - Deduplication Fix  
 **Status:** ✅ Fully Deployed  
-**Last Updated:** 2026-01-02 22:42 IST
+**Last Updated:** 2026-01-02 22:47 IST
 
 ---
 
@@ -27,8 +27,10 @@ If instructions conflict, the latest explicit instruction wins. Remove all earli
 #### **3. SINGLE-MENTION PRESERVATION RULE**
 Any noun, constraint, or requirement mentioned even once must be preserved unless explicitly overridden. Unique data values (names, numbers, URLs, IDs, codes, addresses) must never be dropped.
 
-#### **4. DEDUPLICATION WITHOUT LOSS RULE**
-If the same idea appears multiple times, include it only once, preserving full meaning. Do not duplicate entities under different aliases.
+#### **4. DEDUPLICATION WITHOUT LOSS RULE** ⭐ *ENHANCED in v32*
+If the same idea appears multiple times, include it only once, preserving full meaning.
+- **CRITICAL:** Do not list the same fact twice (e.g., once without context, and again with context). Merge them into a single statement.
+- Do not duplicate entities under different aliases.
 
 #### **5. IMPLICIT CONFIRMATION RULE**
 If the user continues without rejecting a prior instruction, treat it as accepted.
@@ -60,7 +62,7 @@ More specific instructions override earlier generic ones.
 #### **12. NO ASSUMPTION RULE**
 Do not infer, invent, or fill in missing information. If something is not stated, omit it.
 
-#### **13. CONTEXT ≠ ACTION RULE** ⭐ *NEW in v31*
+#### **13. CONTEXT ≠ ACTION RULE**
 Context provides conditions only. It must not introduce new actions, objects, or goals. Context modifies existing intent but does not create new intent.
 
 ---
@@ -99,91 +101,85 @@ User instructions always override AI assumptions or interpretations.
 #### **21. ZERO-HISTORY EXPOSURE RULE**
 The summary must be fully understandable without access to the conversation. Do not reference changes, corrections, or history (never say "updated to", "changed from", "corrected to", "as mentioned earlier").
 
-#### **22. CONTEXT INJECTION RULE**
+#### **22. CONTEXT INJECTION RULE** ⭐ *ENHANCED in v32*
 If a global context (event, time, setting, condition) applies broadly, inject it once into the first relevant sentence and do not repeat it.
+- **CRITICAL:** Do not output the facts once without context and then again with context. Output them ONLY ONCE with the context applied.
 
-#### **23. ENTITY NORMALIZATION RULE** ⭐ *NEW in v31*
+#### **23. ENTITY NORMALIZATION RULE**
 When aliases or shorthand references are resolved (J → Joseph, G → George), normalize to a single canonical entity name and remove all shorthand references from the output.
 
 ---
 
-## 📊 Version Comparison
+## 📊 Version History
 
-### **v30 → v31 Changes:**
+### **v31 → v32 Changes:**
 
-**✅ Added (2 new rules):**
-- **Rule 13:** Context ≠ Action Rule
-- **Rule 23:** Entity Normalization Rule
+**🔧 Enhanced (2 rules):**
+- **Rule 4 (Deduplication):** Added explicit instruction to prevent listing facts twice (once with context, once without)
+- **Rule 22 (Context Injection):** Added critical note to output facts only once with context applied
 
-**🔧 Improved:**
-- Removed all inline examples from rule descriptions
-- Cleaner, more concise language
-- Better organization and readability
-- Reduced prompt token count by ~30%
+**🐛 Bug Fixed:**
+- Duplication issue where facts were listed twice when context was mentioned
 
-**📉 Total Rules:**
-- v30: 21 rules
-- v31: 23 rules
+**Example of Fixed Behavior:**
 
----
+**Input:**
+```
+Joseph Reed is wearing a red jacket. George Reed is wearing a red shirt. 
+Junior Joseph Reed has a white towel. On Diwali, Joseph Reed is wearing 
+a red jacket. George Reed is wearing a red shirt. Junior Joseph Reed has 
+a white towel.
+```
 
-## 🎯 Output Requirements
+**Old Output (v31 - WRONG):**
+```
+Joseph Reed is wearing a red jacket. George Reed is wearing a red shirt. 
+Junior Joseph Reed has a white towel. On Diwali, Joseph Reed is wearing 
+a red jacket. George Reed is wearing a red shirt. Junior Joseph Reed has 
+a white towel.
+```
 
-Produce a clean, dense, standalone summary that functions as a final source of truth.
-
-**Format Rules:**
-- **NO META-LABELS**: Do not use labels like "Summary:", "Task:", "Goal:", "Output:"
-- **NO INTRODUCTORY PHRASES**: Do not start with "This is a summary of...", "The following is...", "Consolidated request:", "Here is the prompt:"
-- **DIRECT START**: Start directly with the core requirement
+**New Output (v32 - CORRECT):**
+```
+On Diwali, Joseph Reed is wearing a red jacket, George Reed is wearing 
+a red shirt, and Junior Joseph Reed has a white towel.
+```
 
 ---
 
 ## 🧪 Test Cases
 
-### Test 1: Entity Normalization (Rule 23)
+### Test 1: Context + Deduplication (v32 Fix)
 **Input:**
 ```
-J.reed's jacket is red, G.reed's shirt is red, and Jr.J.reed's towel is white. 
-J is Joseph and G is George.
+Joseph Reed wears red. On Diwali, Joseph Reed wears red.
 ```
 
 **Expected Output:**
 ```
-Joseph Reed's jacket is red, George Reed's shirt is red, and Joseph Reed Jr.'s towel is white.
+On Diwali, Joseph Reed wears red.
 ```
 
-### Test 2: Context Injection (Rule 22)
+### Test 2: Entity Normalization
 **Input:**
 ```
-It's Diwali. Add lights. Add diyas. Add rangoli. Make it colorful.
+J.reed's jacket is red. J is Joseph.
 ```
 
 **Expected Output:**
 ```
-Create a colorful Diwali scene with lights, diyas, and rangoli.
+Joseph Reed's jacket is red.
 ```
 
-### Test 3: Context ≠ Action (Rule 13)
+### Test 3: Multiple Facts with Context
 **Input:**
 ```
-The weather is sunny. Add a beach scene.
+Add lights. Add diyas. It's Diwali. Add lights. Add diyas.
 ```
 
 **Expected Output:**
 ```
-Add a beach scene.
-```
-*(Weather is context, not an action to add)*
-
-### Test 4: Override Supremacy (Rule 2)
-**Input:**
-```
-Make the button blue. Actually, make it navy blue. Add a border.
-```
-
-**Expected Output:**
-```
-Add a navy blue button with a border.
+For Diwali, add lights and diyas.
 ```
 
 ---
@@ -191,21 +187,11 @@ Add a navy blue button with a border.
 ## 🚀 Deployment Status
 
 ✅ **Backend Updated:** `/backend/src/index.js`  
-✅ **Version:** v31 - Example-Free, Production-Ready  
+✅ **Version:** v32 - Deduplication Fix  
 ✅ **Deployed To:** Cloudflare Workers  
-✅ **Version ID:** `9ed10e09-75a7-4938-bdbd-6f8aea5bd33f`  
+✅ **Version ID:** `fcc95d47-3714-43a5-9ca4-41eb47bdf81b`  
 ✅ **Live URL:** `https://tai-backend.amaravadhibharath.workers.dev`  
 ✅ **No Reload Required:** Changes are live immediately
-
----
-
-## 📈 Quality Improvements in v31
-
-1. **Clearer Rules** - Removed confusing examples that could be misinterpreted
-2. **Better Entity Handling** - Rule 23 ensures aliases are properly normalized
-3. **Context Clarity** - Rule 13 prevents context from creating unintended actions
-4. **Reduced Token Count** - ~30% smaller prompt = faster processing
-5. **Production-Ready** - Clean, professional language suitable for production use
 
 ---
 
@@ -213,9 +199,9 @@ Add a navy blue button with a border.
 
 **"You are compiling intent, not summarizing text."**
 
-The system extracts the final state of what must exist, ignoring the conversational journey that led to it.
+The system extracts the final state of what must exist, ignoring the conversational journey that led to it, and outputs each fact exactly once.
 
 ---
 
-*Last Updated: 2026-01-02 22:42 IST*  
-*Deployed Version: v31*
+*Last Updated: 2026-01-02 22:47 IST*  
+*Deployed Version: v32*
