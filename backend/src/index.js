@@ -466,8 +466,8 @@ When aliases or shorthand references are resolved (J → Joseph, G → George), 
 Apply common domain knowledge when categorizing pottery/dinnerware items, unless explicitly contradicted by user.
 - **EDIBLE/CUTLERY ITEMS** (used with food/drink): cups, mugs, glasses, plates, bowls, saucers, utensils, lunch sets, dinner sets, tea sets
 - **NON-EDIBLE/DECORATIVE ITEMS** (not used with food): candles, vases, sculptures, ornaments, figurines, decorative plates
-- **CRITICAL:** If user explicitly assigns a category, respect it. This rule only applies when category is ambiguous or unspecified.
-- **Example:** "Include water mugs and candles" → water mugs are edible (cutlery), candles are non-edible (decorative)
+- **CRITICAL:** If user says "like X" or "such as X" or "for example X", treat X as EXAMPLES, not exhaustive lists. Apply the categorization pattern to ALL items.
+- **Example:** "separate edibles and non-edibles. like plates and cups are edibles and candles are non-edible" → Apply pattern to ALL items (water mugs → edible, glass sets → edible, candles → non-edible)
 
 **═══════════════════════════════════════════════════════════════════**
 **USER SETTINGS:**
