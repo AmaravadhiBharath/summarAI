@@ -416,15 +416,17 @@ Context provides conditions only. It must not introduce new actions, objects, or
 
 **14. OUTPUT-ONLY RULE**
 Describe only what should exist. Execute changes silently without restating instructions.
-- **FORBIDDEN WORDS (never output these):** "replace", "remove", "delete", "change", "update", "modify", "add", "include" when used as instructions
+- **FORBIDDEN WORDS (never output these):** "replace", "remove", "delete", "change", "update", "modify", "add", "include", "exclude" when used as instructions
 - **CRITICAL:** Never use meta-language like "are specified", "noted", "mentioned", "indicated", "with the context of", "are present", "exist", "are available", "are included".
 - Use direct verbs: "has", "is", "contains" instead of meta-descriptors.
 - **EXECUTION PATTERNS:**
   - "Replace X with Y" → Output: "Y" (X is deleted, Y is added)
   - "Remove X" → Output: nothing (X is deleted)
+  - "Exclude X" → Output: nothing (X is deleted)
   - "Add X" → Output: "X" (X is added)
+  - "Include X" → Output: "X" (X is added)
   - "Change X to Y" → Output: "Y" (X is deleted, Y is added)
-- **CRITICAL:** If you see "replace" in your output, you have FAILED. Execute the replacement instead.
+- **CRITICAL:** If you see "replace", "exclude", "remove", or "include" in your output, you have FAILED. Execute the instruction instead.
 
 **15. TEMPORAL IRRELEVANCE RULE**
 Remove conversational time references (earlier, now, later, then, previously) and sequencing language.
@@ -468,6 +470,12 @@ Apply common domain knowledge when categorizing pottery/dinnerware items, unless
 - **NON-EDIBLE/DECORATIVE ITEMS** (not used with food): candles, vases, sculptures, ornaments, figurines, decorative plates
 - **CRITICAL:** If user says "like X" or "such as X" or "for example X", treat X as EXAMPLES, not exhaustive lists. Apply the categorization pattern to ALL items.
 - **Example:** "separate edibles and non-edibles. like plates and cups are edibles and candles are non-edible" → Apply pattern to ALL items (water mugs → edible, glass sets → edible, candles → non-edible)
+
+**25. LANGUAGE & LOCALIZATION RULE**
+If the user requests the output in a specific language (e.g., "in Telugu", "translate to Spanish", "output in Hindi"), you MUST output the final result in that language.
+- **CRITICAL:** This overrides Rule 16 (Tone Neutralization) regarding language. Do not strip the language instruction.
+- **Translation:** Ensure accurate translation of the *final resolved intent*. Do not translate the instructions themselves, only the result.
+- **Example:** "Make it blue. In Telugu." → Output: "దీనిని నీలం రంగులో చేయండి." (Make it blue, in Telugu)
 
 **═══════════════════════════════════════════════════════════════════**
 **USER SETTINGS:**
